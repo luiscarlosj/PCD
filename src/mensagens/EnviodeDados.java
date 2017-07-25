@@ -92,6 +92,7 @@ public class EnviodeDados extends SequentialBehaviour{
                 c = new Clustering (this.myAgent.getLocalName()); 
                 
                 SecCluster sc = new SecCluster();
+                
                 sc.setSecClusterMap(c.getSecClusterMap());
                 
                 sc.setPoints(c.getDs().size());
