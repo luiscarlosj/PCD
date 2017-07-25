@@ -93,6 +93,7 @@ public class EnviodeDados extends SequentialBehaviour{
                 
                 SecCluster sc = new SecCluster();
                 sc.setSecClusterMap(c.getSecClusterMap());
+                
                 sc.setPoints(c.getDs().size());
                 
                 Resultado r = Resultado.getInstance();
