@@ -82,7 +82,7 @@ public class EnviodeDados extends SequentialBehaviour{
                     System.out.println("ENCERRADO PORQUE O ARQUIVO É NULL");
                 }
                 
-                System.out.println("endereço do arquivo333: "+ ((MinerAgent) this.myAgent).getAID()); //***
+                System.out.println("endereço do arquivo333: "+ ((MinerAgent) this.myAgent).getAID());
                 
                 //c = new Clustering (this.f); 
                 //c.action(); 
