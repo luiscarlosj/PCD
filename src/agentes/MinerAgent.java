@@ -35,15 +35,7 @@ public class MinerAgent extends Agent{
         
         private boolean participaSessao = false; //false se não participa da sessão de mineração
         private boolean temParametros; //false se ainda não foi negociado; true se já negociado
-        private File meuArquivo;
-
-        public File getMeuArquivo() {
-          return meuArquivo;
-        }
-
-        public void setMeuArquivo(File meuArquivo) {
-          this.meuArquivo = meuArquivo;
-        }
+       
         private Parametros param;
         
         Object [ ] args;
@@ -88,7 +80,19 @@ public class MinerAgent extends Agent{
         
         @Override
         protected void setup () {
-           this.teste();            
+            
+           /* Object [ ] args = getArguments (); 
+            
+            addBehaviour(new RegistroNaArquitetura(this, args));
+            //addBehaviour (new RegistraServicoMiner(this)); 
+            //addBehaviour (new AguardarChamamento(this));
+            //addBehaviour (new ChamarAgentes(this));  
+
+            //addBehaviour (new PedirParametros(this));
+            //addBehaviour (new ConfirmarParametros(this));    
+            addBehaviour(new PedirDataSet(this));*/
+                            
+            this.teste();            
         }    
         
         protected void teste(){

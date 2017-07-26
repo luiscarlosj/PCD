@@ -109,7 +109,7 @@ public final class Clustering implements Serializable{
         
         System.out.print("CLUSTERING 1 >>> "+ agente);
         
-        realizaClustering(agente);
+        //realizaClustering(agente);
         i++;
     
     }
@@ -137,11 +137,11 @@ public final class Clustering implements Serializable{
         this.SecLow = this.pm.getParametros()[4];
         this.SecHigh = this.pm.getParametros()[5];
         this.SecTau = this.pm.getParametros()[6];
-        this.SecThreshold = this.pm.getParametros()[7];  
+        this.SecThreshold = this.pm.getParametros()[7]; 
         
-        //realizaClustering(f);
+        realizaClustering(f);
         
-        realizaClustering();        
+        //realizaClustering();        
         i++; 
         
         //this.action();
@@ -161,7 +161,8 @@ public final class Clustering implements Serializable{
     
     }
     
-    public int realizaClustering(String a) {
+    //public int realizaClustering(String a) {
+    public int realizaClustering(File f) {
         
         /*this.SecLow = "0,0";
         this.SecHigh = "1000000,1000000";
@@ -180,12 +181,12 @@ public final class Clustering implements Serializable{
             
             //this.file = escolherArquivo();
                
-            //this.file = f;
+            this.file = f;
             //System.out.println("CLUSTERING 2 >>> "+ a);
             
             //this.file = pm.getArqAgent(a);
             
-            this.file = pm.posicaoFile(parseInt(""+a.charAt(5))-1);  
+            //this.file = pm.posicaoFile(parseInt(""+a.charAt(5))-1);  
             //bem aqui foi resolvido o problema de distribuição do arquivo
             
             //this.file = pm.getPrimeiroFile();    //aqui ele tem que pegar é o arquivo do agente 
@@ -193,7 +194,7 @@ public final class Clustering implements Serializable{
             if (this.file == null){
                     System.out.println("CLUSTERING >>> ENCERRADO PORQUE O ARQUIVO É NULL");
             }else{
-                    System.out.println("CLUSTERING >>> TEM ARQUIVO" + a);
+                    System.out.println("CLUSTERING >>> TEM ARQUIVO");
             }
             
             //this.file = pm.  

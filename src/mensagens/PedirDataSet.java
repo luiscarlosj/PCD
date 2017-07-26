@@ -20,7 +20,10 @@ import java.io.File;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import mineracao.Clustering;
 import mineracao.Parametros;
+import mineracao.Resultado;
+import mineracao.SecCluster;
 //import protocolos.ProtocoloCfpChamarAgentes;
 //import protocolos.ProtocoloQueryPedirDataSet;
 
@@ -91,6 +94,7 @@ public class PedirDataSet extends SequentialBehaviour{
 class ProtocoloQueryPedirDataSet extends AchieveREInitiator {
     
         Parametros pm = Parametros.getInstance();
+         Resultado results = Resultado.getInstance();
     
         public ProtocoloQueryPedirDataSet(Agent agente, ACLMessage mensagem) {
             super(agente, mensagem);
@@ -118,17 +122,12 @@ class ProtocoloQueryPedirDataSet extends AchieveREInitiator {
             
             try {
                 File f = (File) inform.getContentObject();  //***
-                //System.out.println("endereço do arquivo: "+ ((File) inform.getContentObject()).getAbsolutePath());
-                System.out.println("endereço do arquivo: "+ f.getAbsolutePath()); //***
-                ((MinerAgent) this.myAgent).setMeuArquivo(f);
-                System.out.println("endereço do arquivo: "+ ((MinerAgent) this.myAgent).getMeuArquivo().getAbsolutePath()); //***
                 
-                //pm.setArq(this.myAgent.getLocalName(), f);
+                System.out.println("endereço do arquivo1: "+ f.getAbsolutePath()); //***
                 
-                //System.out.println("RECEBEU DATASET AQUI endereço do arquivo: "+ pm.getArqAgent(this.myAgent.getLocalName()).getAbsolutePath());
-                
-                //pm.getArq().put(this.myAgent.getLocalName(), f);
-                
+                System.out.println("RECUPERANDO NOME DO ARQUIVO 1: \n" 
+                        + (this.pm.getArqAgent(this.myAgent.getAID().getLocalName())).getAbsolutePath());
+                                
             } catch (UnreadableException ex) {
                 Logger.getLogger(ProtocoloQueryPedirDataSet.class.getName()).log(Level.SEVERE, null, ex);
             }

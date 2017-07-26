@@ -724,16 +724,16 @@ public class JFileChooserDemo extends javax.swing.JFrame {
         this.textarea.append("");
         
         if (numMinerAgent !=0)
-            this.textarea.append("Instanciados " +numMinerAgent+" MinerAgent para esta sessão de mineração\n");  
+            this.textarea.append("\nInstanciados " +numMinerAgent+" MinerAgent para esta sessão de mineração\n");  
             
         if (numDataAgent !=0)
-            this.textarea.append("Instanciados " +numDataAgent+" MinerAgent para esta sessão de mineração\n");  
+            this.textarea.append("Instanciados " +numDataAgent+" DataAgent para esta sessão de mineração\n");  
             
         if (numManagerAgent !=0)
-            this.textarea.append("Instanciados " +numManagerAgent+" MinerAgent para esta sessão de mineração\n");
+            this.textarea.append("Instanciados " +numManagerAgent+" ManagerAgent para esta sessão de mineração\n");
             
         if (numHelperAgent !=0)
-            this.textarea.append("Instanciados " +numHelperAgent+" MinerAgent para esta sessão de mineração\n"); 
+            this.textarea.append("Instanciados " +numHelperAgent+" Helper Agent para esta sessão de mineração\n"); 
     }//GEN-LAST:event_btnSecCluster1ActionPerformed
 
     private void btnSecCancel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSecCancel1ActionPerformed

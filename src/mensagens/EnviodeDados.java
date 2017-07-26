@@ -37,6 +37,7 @@ public class EnviodeDados extends SequentialBehaviour{
     Clustering c;
     File f;
     Parametros pm = Parametros.getInstance();
+    Resultado  results = Resultado.getInstance();
     
     public EnviodeDados(Agent a,  Object [] arg) {
         super(a);
@@ -75,21 +76,36 @@ public class EnviodeDados extends SequentialBehaviour{
                     
                 mensagem.setProtocol(FIPANames.InteractionProtocol.FIPA_REQUEST);
                 
-                this.f = ((MinerAgent) this.myAgent).getMeuArquivo();
+                //this.f = ((MinerAgent) this.myAgent).getMeuArquivo();
+                
+                this.f = this.pm.getArqAgent(this.myAgent.getAID().getLocalName()); 
+                
+                System.out.println("RECUPERANDO NOME DO ARQUIVO 2: \n" + this.f.getAbsolutePath());
                 
                 if (this.f == null){
                     done();
                     System.out.println("ENCERRADO PORQUE O ARQUIVO É NULL");
                 }
+                else
+                {
+                   System.out.println("NÃO FOI ENCERRADO PORQUE TEM ARQUIVO NÃO FOI ENCERRADO PORQUE TEM ARQUIVO");
+                }
                 
                 System.out.println("endereço do arquivo333: "+ ((MinerAgent) this.myAgent).getAID());
                 
-                //c = new Clustering (this.f); 
-                //c.action(); 
+                Clustering c = new Clustering (f); 
                 
-                //Fazer código aqui para recuperar arquivo
+                SecCluster sc = new SecCluster();
                 
-                c = new Clustering (this.myAgent.getLocalName()); 
+                sc.setSecClusterMap(c.getSecClusterMap());
+                
+                sc.setPoints(c.getDs().size());
+                
+                this.results.addResultAgent(myAgent.getAID().getLocalName(), 
+                              Integer.toString(sc.getSecClusterMap().keySet().size())  + " clusters found with " 
+                              + Integer.toString(sc.getPoints()) + " data points.\n");
+                                
+                /*c = new Clustering (this.myAgent.getLocalName()); 
                 
                 SecCluster sc = new SecCluster();
                 
@@ -101,16 +117,21 @@ public class EnviodeDados extends SequentialBehaviour{
                 
                 r.addResultAgent(myAgent.getAID().getLocalName(), 
                               Integer.toString(sc.getSecClusterMap().keySet().size())  + " clusters found with " 
-                              + Integer.toString(sc.getPoints()) + " data points.\n");
+                              + Integer.toString(sc.getPoints()) + " data points.\n");*/
                 
                 //System.out.print("Done.\n " + secClusterMap.keySet().size() + " clusters found with " + ds.size() + " data points.\n");
            
                 //((MinerAgent) this.myAgent).setSecClusterMap(c.getSecClusterMap()); aqui
                 
                 //mensagem.setContentObject((Serializable) this.c);
-                mensagem.setContentObject((Serializable) sc);
+                //SecCluster sc = this.results.devolveSecClusterPorMiner(this.myAgent.getAID().getLocalName());
                 
-                //***System.out.println("77777777777777777777777777777777777777777 aqui aqui\n " + ((MinerAgent) this.myAgent).getSecClusterMap().keySet().size() + " clusters found");
+                if (sc == null)
+                    System.out.println("NULO NULO NULO NULO NULO NULO NULO NULO NULO NULO NULO NULO NULO NULO NULO");
+                else
+                    System.out.println("TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM");
+                
+                mensagem.setContentObject((Serializable) sc);
                 
                 //Indicamos o tempo que esperaremos pelas ofertas.
                 mensagem.setReplyByDate(new Date(System.currentTimeMillis() + 3000));

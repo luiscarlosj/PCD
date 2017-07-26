@@ -37,9 +37,22 @@ public class Resultado {
             return results;
         }
         
-        
-        
-        
-        
-        
 }
+
+/* Map<String, SecCluster> SecClusterPorMiner = new HashMap();
+
+        public Map<String, SecCluster> getSecClusterPorMiner() {
+           return SecClusterPorMiner;
+        }
+
+        public void setSecClusterPorMiner(Map<String, SecCluster> SecClusterPorMiner) {
+           this.SecClusterPorMiner = SecClusterPorMiner;
+        }
+        
+        public void addSecClusterPorMiner(String nomeAgenteMiner, SecCluster secClusterMiner){        
+            this.SecClusterPorMiner.put(nomeAgenteMiner, secClusterMiner);                
+        }
+        
+        public SecCluster devolveSecClusterPorMiner(String nomeAgenteMiner){           
+            return this.SecClusterPorMiner.get(nomeAgenteMiner);        
+        }*/

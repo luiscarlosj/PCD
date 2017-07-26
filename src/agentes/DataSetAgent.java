@@ -18,17 +18,8 @@ public class DataSetAgent extends Agent{
     
     Parametros pm = Parametros.getInstance();
     
-    private boolean temDataSet = false; 
     // começa com false; assim que inicia o programa e ocorre a leitura do arquivo essa variável recebe true;
 
-    public boolean isTemDataSet() {
-        return temDataSet;
-    }
-
-    public void setTemDataSet(boolean temDataSet) {
-        this.temDataSet = temDataSet;
-    }
-    
     @Override
         protected void setup () {
             
