@@ -60,7 +60,6 @@ class ProtocoloCfpAguardarChamamento  extends ContractNetResponder {
             
             //***System.out.printf("Agente %s: confirmando proposta.\n", this.myAgent.getLocalName());
 
-            //Se cria a mensagem
             ACLMessage oferta = cfp.createReply();
             oferta.setPerformative(ACLMessage.PROPOSE);
             oferta.setContent("aceito participar da mineração");
@@ -68,9 +67,6 @@ class ProtocoloCfpAguardarChamamento  extends ContractNetResponder {
 
         } else {
 
-            //Se não houver ofertas disponíveis rejeitamos a proposta
-            //***System.out.printf("Agente %s: já participamos de uma sessão de mineração.\n", this.myAgent.getLocalName());
-            
             ACLMessage oferta = cfp.createReply();
             oferta.setPerformative(ACLMessage.REFUSE);
             oferta.setContent("Recusado");
@@ -106,6 +102,7 @@ class ProtocoloCfpAguardarChamamento  extends ContractNetResponder {
     protected void handleRejectProposal(ACLMessage cfp, ACLMessage propose, ACLMessage reject) {
         //Oferta foi rejeitada
         System.out.printf("Agente %s: Chamamento rejeitado.\n", this.myAgent.getLocalName());
+        
                
     }
 }

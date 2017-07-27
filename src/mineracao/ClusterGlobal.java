@@ -17,14 +17,17 @@ import model.clustering.DataPoint;
  */
 public class ClusterGlobal implements Serializable {
     
-        private static ClusterGlobal uniqueInstance;   
+        private Map<Integer, java.util.List<DataPoint>> clusterGlobal = new HashMap<Integer, java.util.List<DataPoint>>();        
+        private Map <Integer, SecCluster> clusterLocal = new HashMap();
+        private static ClusterGlobal uniqueInstance; 
+    
         private int contador = 0;
         private int contador2 = 0;
         
         private ClusterGlobal () {
 	 
         }
-
+        
 	public static synchronized ClusterGlobal getInstance() {
 		if (uniqueInstance == null)
 			uniqueInstance = new ClusterGlobal ();
@@ -32,10 +35,6 @@ public class ClusterGlobal implements Serializable {
 		return uniqueInstance;
 	}
     
-        private Map<Integer, java.util.List<DataPoint>> clusterGlobal = new HashMap<Integer, java.util.List<DataPoint>>();
-        
-        private Map <Integer, SecCluster> clusterLocal = new HashMap();
-
         public Map<Integer, SecCluster> getClusterLocal() {
            return clusterLocal;
         }
@@ -51,8 +50,7 @@ public class ClusterGlobal implements Serializable {
         public void guardarClusterLocal(SecCluster sc) 
         {
             this.contador2++;            
-            this.clusterLocal.put(contador2, sc);            
-                    
+            this.clusterLocal.put(contador2, sc);       
         }
         
         private Integer points = 0;

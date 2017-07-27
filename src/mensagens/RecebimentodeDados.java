@@ -6,7 +6,6 @@
 package mensagens;
 
 import agentes.HelperAgent;
-import agentes.MinerAgent;
 import jade.core.Agent;
 import jade.core.behaviours.SequentialBehaviour;
 import jade.domain.DFService;
@@ -21,7 +20,6 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.lang.acl.UnreadableException;
 import jade.proto.AchieveREResponder;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -30,7 +28,6 @@ import mineracao.ClusterGlobal;
 import mineracao.Clustering;
 import mineracao.SecCluster;
 import model.clustering.DataPoint;
-//import protocolos.ProtocoloRequestRecebimentoDados;
 
 /**
  *
@@ -60,26 +57,113 @@ public class RecebimentodeDados extends SequentialBehaviour{
     
 }
 
-
 class ProtocoloRequestRecebimentoDados extends AchieveREResponder {
                 
-                int contador = 0;
-                Clustering c;
-                int quantAgentes;
+                private static final long serialVersionUID = 1L;            
+    
                 ClusterGlobal cg = ClusterGlobal.getInstance();
-                SecCluster sc = new SecCluster();
+                SecCluster sc = new SecCluster();            
                 
-                public int getContador() {
-                   return contador;
+                public ProtocoloRequestRecebimentoDados ( Agent a , MessageTemplate mt) throws FIPAException {
+			super(a, mt) ;
+		}
+
+		@Override
+		protected ACLMessage prepareResponse (ACLMessage request ) throws NotUnderstoodException , RefuseException 
+                {
+
+			System.out.println(myAgent.getLocalName () + ": recebeu uma solicitação de " + request.getSender().getLocalName() + " para envio de seu clustering parcial") ;
+                       
+                        if(request.getSender() != null) 
+                        {
+                            
+                            try { 
+                                this.sc = (SecCluster) request.getContentObject();
+                            } catch (UnreadableException ex) {
+                                Logger.getLogger(ProtocoloRequestRecebimentoDados.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                           
+                            if(this.sc.getSecClusterMap() != null)
+                            {
+                                System.out.println( "Agent " + myAgent.getLocalName () + ": recebendo dados de "+request.getSender().getLocalName()) ;
+                                System.out.println(this.sc.getSecClusterMap().keySet().size() + " clusters found with "+this.sc.getPoints()+ " data points.\n");
+                                
+                                this.cg.agrupaCluster(this.sc);
+                                
+                                System.out.println(this.sc.getSecClusterMap().keySet().size() + " clusters found with "+this.sc.getPoints()+ " data points.\n");                                                  
+                                ACLMessage agree = request.createReply () ;
+                                agree.setPerformative (ACLMessage.AGREE) ;
+                                return agree; // envia mensagem AGREEE
+                                
+                            } else
+                            {
+                                //Envia Mensagem REFUSE com o motivo
+                                System.out.println( myAgent.getLocalName () + ": não está recebendo arquivos no momento.") ;
+                                throw new RefuseException ( "sem recebimento de arquivos no momento") ;
+                            }
+                        }
+                        else
+                        {
+                            // envia mensagem NOT UNDERSTOOD	
+                            throw new NotUnderstoodException ( "Agent %s não entendeu a mensagem" + myAgent.getLocalName ()) ;
+                        }                   
+                      
                 }
 
-                public void setContador(int contador) {
-                   this.contador = contador;
-                }               
+		// Prepara resultado final, caso tenha enviado mensagem AGREE
+                @Override
+		protected ACLMessage prepareResultNotification (ACLMessage request, ACLMessage response ) throws FailureException 
+                {
+		    //if (this.contador != 0) 
+                    if(this.sc.getSecClusterMap() != null)
+                    {
+                        
+                       System.out.println(myAgent.getLocalName () + ":dados recebidos com sucesso.");                    
+                       ACLMessage inform = request.createReply();
+                       inform.setPerformative(ACLMessage.INFORM);
 
-		private static final long serialVersionUID = 1L;
+                       return inform; // envia mensagem INFORM
+                    } else {
+                        
+                      System.out.println(myAgent.getLocalName () + ": abortou recebimento");
+                      throw new FailureException("abortou recebimento de dados");
+                    }
+                }
+}
+
+/*
+private void agrupaCluster(Map<Integer, List<DataPoint>> clusterLocal) 
+                {
+                    this.cg.agrupaCluster(clusterLocal); 
+                     
+                    if (this.contador == this.quantAgentes)
+                    {
+                        System.out.println("PRONTO!!!");
+                        System.out.println(this.cg.getClusterGlobal().keySet().size() + " clusters found with");
+                    }
+                }  
                 
-                int quantidadeAgentesMiner = 4;
+                private int quantAgente() throws FIPAException
+                {
+                    ServiceDescription servico = new ServiceDescription();
+                    servico.setType("mineracao");
+                    servico.setName("clusteringMiner");
+ 
+                    DFAgentDescription descripcion = new DFAgentDescription();
+                    descripcion.addLanguages("portugues");
+                    descripcion.addServices(servico);       
+        
+       
+                    DFAgentDescription[] resultados = DFService.search(this.myAgent, descripcion);
+                    
+                    return resultados.length;
+                }
+
+
+*/
+
+/*
+ int quantidadeAgentesMiner = 4;
                 
                 String[] registroDeAgentes = new String[quantidadeAgentesMiner]; 
                 
@@ -112,125 +196,5 @@ class ProtocoloRequestRecebimentoDados extends AchieveREResponder {
                                       
                     return false;   
                 }
-                        
-                public ProtocoloRequestRecebimentoDados ( Agent a , MessageTemplate mt) throws FIPAException {
-			super(a, mt) ;
-                        this.quantAgentes = this.quantAgente();
-		}
 
-		@Override
-		protected ACLMessage prepareResponse (ACLMessage request ) throws NotUnderstoodException , RefuseException 
-                {
-
-			System.out.println(myAgent.getLocalName () + ": recebeu uma solicitação de " + request.getSender().getLocalName() + " para envio de seu clustering parcial") ;
-                       
-                        this.contador++;
-                        
-                        System.out.println("**************NUMERO DO CONTADOR: " + this.contador);
-                        
-                        this.adicionaAgente(request.getSender().getLocalName());
-                        
-                        if(request.getSender() != null) 
-                        {
-                            
-                            try { 
-                               //this.c = (Clustering) request.getContentObject();
-                                this.sc = (SecCluster) request.getContentObject();
-                                //this.cg.setClusterGlobal(this.sc.getSecClusterMap());
-                                
-                            } catch (UnreadableException ex) {
-                                Logger.getLogger(ProtocoloRequestRecebimentoDados.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                           
-                            if(this.sc.getSecClusterMap() != null)
-                            {
-                                System.out.println( "Agent " + myAgent.getLocalName () + ": recebendo dedados de "+request.getSender().getLocalName()) ;
-                                System.out.println(this.sc.getSecClusterMap().keySet().size() + " clusters found with "+this.sc.getPoints()+ " data points.\n");
-                                
-                                System.out.println("CONJUNTO DE CHAVES DO CLUSTERING LOCAL>> "+this.sc.getSecClusterMap().keySet());
-                                
-                                //this.agrupaCluster(this.c.getSecClusterMap());
-                                //this.cg.agrupaCluster(this.sc.getSecClusterMap());
-                                
-                                this.cg.agrupaCluster(this.sc);
-                                
-                                
-                                //this.agrupaCluster(this.sc.getSecClusterMap());
-                                
-                                //System.out.println(this.c.getSecClusterMap().keySet().size() + " clusters found with "+this.c.getDs().size()+ " data points.\n");
-                                System.out.println(this.sc.getSecClusterMap().keySet().size() + " clusters found with "+this.sc.getPoints()+ " data points.\n");
-                                                  
-                                ACLMessage agree = request.createReply () ;
-                                agree.setPerformative (ACLMessage.AGREE) ;
-                                return agree; // envia mensagem AGREEE
-                                
-                            } else
-                            {
-                                //Envia Mensagem REFUSE com o motivo
-                                System.out.println( myAgent.getLocalName () + ": não está recebendo arquivos no momento.") ;
-                                throw new RefuseException ( "sem recebimento de arquivos no momento") ;
-                            }
-                        }
-                        else
-                        {
-                            // envia mensagem NOT UNDERSTOOD	
-                            throw new NotUnderstoodException ( "Agent %s não entendeu a mensagem" + myAgent.getLocalName ()) ;
-                        }                   
-                      
-                }
-
-		// Prepara resultado final, caso tenha enviado mensagem AGREE
-                @Override
-		protected ACLMessage prepareResultNotification (ACLMessage request, ACLMessage response ) throws FailureException 
-                {
-		    if (this.contador != 0) {
-                        
-                       System.out.println(myAgent.getLocalName () + ":dados recebidos com sucesso.");                    
-                       ACLMessage inform = request.createReply();
-                       inform.setPerformative(ACLMessage.INFORM);
-
-                       return inform; // envia mensagem INFORM
-                    } else {
-                        
-                      System.out.println(myAgent.getLocalName () + ": abortou recebimento");
-                      throw new FailureException("abortou recebimento de dados");
-                    }
-                    
-                    
-                }
-                
-                private void agrupaCluster(Map<Integer, List<DataPoint>> clusterLocal) 
-                {
-                    this.cg.agrupaCluster(clusterLocal); 
-                    
-                    //verificar e há realmente necessidade dessa linha de código
-                    //((HelperAgent) this.myAgent).setClusterGlobal(this.clusterGlobal);                    
-                     
-                    if (this.contador == this.quantAgentes)
-                    {
-                        //this.cg.setClusterGlobal(this.clusterGlobal);
-                        System.out.println("PRONTO!!!");
-                        //System.out.println(this.clusterGlobal.keySet().size() + " clusters found with");
-                        System.out.println(this.cg.getClusterGlobal().keySet().size() + " clusters found with");
-                        //this.contador = 0;
-                        
-                    }
-                }  
-                
-                private int quantAgente() throws FIPAException
-                {
-                    ServiceDescription servico = new ServiceDescription();
-                    servico.setType("mineracao");
-                    servico.setName("clusteringMiner");
- 
-                    DFAgentDescription descripcion = new DFAgentDescription();
-                    descripcion.addLanguages("portugues");
-                    descripcion.addServices(servico);       
-        
-       
-                    DFAgentDescription[] resultados = DFService.search(this.myAgent, descripcion);
-                    
-                    return resultados.length;
-                }
-                
-	}
+*/

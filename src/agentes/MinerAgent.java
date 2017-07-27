@@ -9,19 +9,11 @@ import comportamentos.RegistroNaArquitetura;
 import jade.core.Agent;
 import jade.core.behaviours.FSMBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
-import jade.core.behaviours.WakerBehaviour;
-import java.io.File;
-import java.util.List;
-import java.util.Map;
 import mensagens.AguardarChamamento;
 import mensagens.ChamarAgentes;
-import mensagens.ConfirmarParametros;
 import mensagens.EnviodeDados;
 import mensagens.PedirDataSet;
 import mensagens.PedirParametros;
-import mineracao.ClusterGlobal;
-import mineracao.Parametros;
-import model.clustering.DataPoint;
 
 /**
  *
@@ -31,41 +23,13 @@ public class MinerAgent extends Agent{
     
         private static final long serialVersionUID = 1L;
         
-        ClusterGlobal cg = ClusterGlobal.getInstance();
+        public MinerAgent() {
         
-        private boolean participaSessao = false; //false se não participa da sessão de mineração
-        private boolean temParametros; //false se ainda não foi negociado; true se já negociado
-       
-        private Parametros param;
+        }
         
         Object [ ] args;
-
-        public Object[] getArgs() {
-           return args;
-        }
-
-        public void setArgs(Object[] args) {
-          this.args = args;
-        }
+        private boolean participaSessao = false; //false se não participa da sessão de mineração        
         
-        String arg1;
-
-        public boolean isTemParametros() {
-            return temParametros;
-        }
-
-        public void setTemParametros(boolean temParametros) {
-            this.temParametros = temParametros;
-        }
-        
-        public Parametros getP() {
-           return param;
-        }
-
-        public void setP(Parametros p) {
-           this.param = p;
-        }
-
         public void setParticipaSessao(boolean participaSessao) {
            this.participaSessao = participaSessao;
         }
@@ -74,33 +38,18 @@ public class MinerAgent extends Agent{
            return participaSessao;
         }
         
-        public MinerAgent() {
-        
-        }
-        
         @Override
         protected void setup () {
             
-           /* Object [ ] args = getArguments (); 
-            
-            addBehaviour(new RegistroNaArquitetura(this, args));
-            //addBehaviour (new RegistraServicoMiner(this)); 
-            //addBehaviour (new AguardarChamamento(this));
-            //addBehaviour (new ChamarAgentes(this));  
-
-            //addBehaviour (new PedirParametros(this));
-            //addBehaviour (new ConfirmarParametros(this));    
-            addBehaviour(new PedirDataSet(this));*/
-                            
             this.teste();            
+            
         }    
         
         protected void teste(){
             
             long tempInicial = System.currentTimeMillis();
          
-            args = getArguments ();  
-            //args = getArgs();
+            args = getArguments (); 
             
 		FSMBehaviour compFSM = new FSMBehaviour ( this ) {
 			public int onEnd ( ) {
@@ -216,20 +165,12 @@ public class MinerAgent extends Agent{
                         
 		} ,"F");
                 
-                
-                
                 // definimos as transições
 		compFSM.registerTransition( "A" , "B" , 0) ; //A --> B, caso onEnd() do A retorne 0
 		compFSM.registerTransition( "B" , "C" , 0) ; //B --> C, caso onEnd() do B retorne 1
                 compFSM.registerTransition( "C" , "D" , 0) ; //B --> C, caso onEnd() do B retorne 1
                 compFSM.registerTransition( "D" , "E" , 0) ;
-                compFSM.registerTransition( "E" , "F" , 0) ;
-                //compFSM.registerTransition( "C" , "D" , 0) ;
-                //compFSM.registerTransition( "C" , "D" , 0) ; //C --> D, caso onEnd() do D retorne 0
-                //compFSM.registerTransition( "D" , "E" , 0) ; //C --> D, caso onEnd() do D retorne 0
-
-		// definimos uma transi��o padr�o ( n�o importa tipo de retorno)
-		//como a maquina � finita, temos que zerar os estados X e Z --> new String[] {"X" , "Z"} 
+                compFSM.registerTransition( "E" , "F" , 0) ;                
 		
 		compFSM.registerDefaultTransition( "B" , "C" , new String[] {"C","B"});
 
@@ -239,3 +180,51 @@ public class MinerAgent extends Agent{
             
         }
 }
+
+
+/*
+
+        private boolean temParametros; //false se ainda não foi negociado; true se já negociado
+       
+        
+
+        public boolean isTemParametros() {
+            return temParametros;
+        }
+
+        public void setTemParametros(boolean temParametros) {
+            this.temParametros = temParametros;
+        }
+
+        private Parametros param;
+        
+        public Parametros getP() {
+           return param;
+        }
+
+        public void setP(Parametros p) {
+           this.param = p;
+        }
+*/
+
+/*
+/* Object [ ] args = getArguments (); 
+            
+            addBehaviour(new RegistroNaArquitetura(this, args));
+            //addBehaviour (new RegistraServicoMiner(this)); 
+            //addBehaviour (new AguardarChamamento(this));
+            //addBehaviour (new ChamarAgentes(this));  
+
+            //addBehaviour (new PedirParametros(this));
+            //addBehaviour (new ConfirmarParametros(this));    
+            addBehaviour(new PedirDataSet(this));
+*/
+
+/*
+//compFSM.registerTransition( "C" , "D" , 0) ;
+                //compFSM.registerTransition( "C" , "D" , 0) ; //C --> D, caso onEnd() do D retorne 0
+                //compFSM.registerTransition( "D" , "E" , 0) ; //C --> D, caso onEnd() do D retorne 0
+
+		// definimos uma transi��o padr�o ( n�o importa tipo de retorno)
+		//como a maquina � finita, temos que zerar os estados X e Z --> new String[] {"X" , "Z"} 
+*/

@@ -5,30 +5,22 @@
  */
 package mineracao;
 
-import agentes.MinerAgent;
-import control.clustering.Estimator;
-import control.clustering.KDEC;
+
 import control.clustering.KDEC_S;
 import control.clustering.SecureEstimator;
-import jade.core.Agent;
-import jade.core.behaviours.Behaviour;
 import java.io.File;
 import java.io.Serializable;
 import java.io.StreamTokenizer;
 import java.io.StringReader;
-import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import javax.swing.JFileChooser;
 import model.clustering.DataPoint;
 import model.clustering.DataSet;
-import model.clustering.DensityEstimate;
 import model.clustering.Grid;
 import model.clustering.SecureDensityEstimate;
 import persistence.DataSetDAO;
 import persistence.DataSetDAOPlainFile;
-import ui.JFileChooserDemo;
 import util.distances.DistanceFunction;
 import util.distances.EuclideanDistance;
 import util.kernels.GaussKernel;
@@ -40,6 +32,12 @@ import util.kernels.Kernel;
  */
 public final class Clustering implements Serializable{
     
+        Map<Integer, java.util.List<DataPoint>> secClusterMap = null; 
+        Parametros pm = Parametros.getInstance();
+        private File currentFile = null;
+        private DataSet ds;
+        private File file = null;
+        
         String SecLow;
         String SecHigh;
         String SecTau;
@@ -47,85 +45,22 @@ public final class Clustering implements Serializable{
         String SecNeighborhood;  
         String SecStep;  
         String SecThreshold;           
-        String SecKernel;
+        String SecKernel;   
         
-        int i = 0;    
-        File file = null;
-        File currentFile = null;
-        Parametros pm = Parametros.getInstance();
-        private DataSet ds;
-
-        public DataSet getDs() {
-          return ds;
-        }
-        
-        Map<Integer, java.util.List<DataPoint>> secClusterMap = null;        
-
-        public Map<Integer, List<DataPoint>> getSecClusterMap() {
-          return secClusterMap;
-        }
-
-        public void setSecClusterMap(Map<Integer, List<DataPoint>> secClusterMap) {
-           this.secClusterMap = secClusterMap;
-        }
-    
-        public Clustering (String SecLow1, String SecHigh1, 
-                                      String SecTau1, String SecH1,String SecNeighborhood1, 
-                                      String SecStep1,String SecThreshold1,String SecKernel1){
-        this.SecLow = SecLow1;
-        this.SecHigh = SecHigh1;
-        this.SecTau = SecTau1;
-        this.SecH = SecH1;                
-        this.SecNeighborhood = SecNeighborhood1;  
-        this.SecStep = SecStep1;  
-        this.SecThreshold = SecThreshold1;           
-        this.SecKernel = SecKernel1;
-    
-        }
-    
-    public Clustering (Parametros pm){
-        
-        this.SecKernel = pm.getParametros()[0];        
-        this.SecH = pm.getParametros()[1];
-        this.SecNeighborhood = pm.getParametros()[2]; 
-        this.SecStep = pm.getParametros()[3]; 
-        this.SecLow = pm.getParametros()[4];
-        this.SecHigh = pm.getParametros()[5];
-        this.SecTau = pm.getParametros()[6];
-        this.SecThreshold = pm.getParametros()[7];  
-    
+    public DataSet getDs() {
+        return ds;
     }
-    
-    public Clustering (String agente){
         
-        this.SecKernel = pm.getParametros()[0];        
-        this.SecH = pm.getParametros()[1];
-        this.SecNeighborhood = pm.getParametros()[2]; 
-        this.SecStep = pm.getParametros()[3]; 
-        this.SecLow = pm.getParametros()[4];
-        this.SecHigh = pm.getParametros()[5];
-        this.SecTau = pm.getParametros()[6];
-        this.SecThreshold = pm.getParametros()[7];  
-        
-        System.out.print("CLUSTERING 1 >>> "+ agente);
-        
-        //realizaClustering(agente);
-        i++;
-    
+    public Map<Integer, List<DataPoint>> getSecClusterMap() {
+        return secClusterMap;
+    }
+
+    public void setSecClusterMap(Map<Integer, List<DataPoint>> secClusterMap) {
+        this.secClusterMap = secClusterMap;
     }
     
     public Clustering (){
         
-        this.SecKernel = this.pm.getParametros()[0];        
-        this.SecH = this.pm.getParametros()[1];
-        this.SecNeighborhood = this.pm.getParametros()[2]; 
-        this.SecStep = this.pm.getParametros()[3]; 
-        this.SecLow = this.pm.getParametros()[4];
-        this.SecHigh = this.pm.getParametros()[5];
-        this.SecTau = this.pm.getParametros()[6];
-        this.SecThreshold = this.pm.getParametros()[7];  
-        
-        this.action();
     }
     
     public Clustering (File f){
@@ -141,80 +76,33 @@ public final class Clustering implements Serializable{
         
         realizaClustering(f);
         
-        //realizaClustering();        
-        i++; 
-        
-        //this.action();
-    }
-      
-    public void action() {      
-        realizaClustering();
-        i++;        
-    }
-
-    
-    public boolean done() {
-        return i>0;
     }
     
-    public void realizaClustering(){
-    
-    }
-    
-    //public int realizaClustering(String a) {
     public int realizaClustering(File f) {
         
-        /*this.SecLow = "0,0";
-        this.SecHigh = "1000000,1000000";
-        this.SecTau = "10000,10000";
-        this.SecH = "10000.0";                
-        this.SecNeighborhood = "3";  
-        this.SecStep = "1";  
-        this.SecThreshold = "2.0";           
-        this.SecKernel = "Gauss";*/
-                
         //Initialization
         DistanceFunction distance = new EuclideanDistance();
         DataSetDAO nds = new DataSetDAOPlainFile(distance);
 
         try {
             
-            //this.file = escolherArquivo();
-               
             this.file = f;
-            //System.out.println("CLUSTERING 2 >>> "+ a);
-            
-            //this.file = pm.getArqAgent(a);
-            
-            //this.file = pm.posicaoFile(parseInt(""+a.charAt(5))-1);  
-            //bem aqui foi resolvido o problema de distribuição do arquivo
-            
-            //this.file = pm.getPrimeiroFile();    //aqui ele tem que pegar é o arquivo do agente 
-            
-            if (this.file == null){
-                    System.out.println("CLUSTERING >>> ENCERRADO PORQUE O ARQUIVO É NULL");
-            }else{
-                    System.out.println("CLUSTERING >>> TEM ARQUIVO");
-            }
-            
-            //this.file = pm.  
             
             System.out.print("\nOpening file " + this.file.getAbsolutePath() + ".\n"); 
-            //this.txtLog.append("Opening file " + this.file.getAbsolutePath() + ".\n");
             ds = nds.load(true, this.file.getAbsolutePath());
             int dimension = ds.getDim();
             
             System.out.print(dimension + "-dimensinal data loaded.\n");
             //this.txtLog.append(dimension + "-dimensinal data loaded.\n");
 
-            long[] startCorner = parseCorner(SecLow, dimension);  //long[] startCorner = parseCorner(this.txtSecLow.getText(), dimension);
-            long[] endCorner = parseCorner(SecHigh, dimension);  //long[] endCorner = parseCorner(this.txtSecHigh.getText(), dimension);
-            long[][] corners = new long[][]{startCorner, endCorner};  //long[][] corners = new long[][]{startCorner, endCorner};
-            double[] tau = parseTau(SecTau, dimension);  //double[] tau = parseTau(this.txtSecTau.getText(), dimension);
-            double h = parseDouble(SecH);  //double h = parseDouble(this.txtSecH.getText());
-            int neighborhood = parseInt(SecNeighborhood);  //int neighborhood = parseInt(this.txtSecNeighborhood.getText());
-            int step = parseInt(SecStep);  //int step = parseInt(this.txtSecStep.getText());
-            double threshold = parseDouble(SecThreshold);  //double threshold = parseDouble(this.txtSecThreshold.getText());
+            long[] startCorner = parseCorner(SecLow, dimension);  
+            long[] endCorner = parseCorner(SecHigh, dimension);  
+            long[][] corners = new long[][]{startCorner, endCorner};  
+            double[] tau = parseTau(SecTau, dimension);  
+            double h = parseDouble(SecH);  
+            int neighborhood = parseInt(SecNeighborhood); 
+            int step = parseInt(SecStep);  
+            double threshold = parseDouble(SecThreshold); 
             // Radius wil be constant since it is used to create cluster-guides
             int radius = 1;
 
@@ -262,46 +150,26 @@ public final class Clustering implements Serializable{
             
             KDEC_S secClt = new KDEC_S();
 
-
             //TODO Adaptive threshold
             double adaptThreshold = (threshold / k.calculate(0)) * isoLevels[isoLevels.length - 1];
-            
             
             //A primeira hipotese é que aqui é que deve ser realizado o clustering distribuído
             this.secClusterMap = secClt.cluster(ds, g, neighborhood, sde, adaptThreshold);
             
-            
             this.setSecClusterMap(secClusterMap);
 
-            // [Removed 2012.01.26 1904]
-            // No longer used
-            // Line: Enumeration keys = secClusterMap.keys();
-
-            /*
-             * while (keys.hasMoreElements()){ Integer key =
-             * (Integer)keys.nextElement(); Vector dataPoints =
-             * (Vector)clusterMap.get(key); System.out.print("Cluster "+key+":
-             * "); for(int i=0; i<dataPoints.size();i++){
-             * System.out.print(((DataPoint)dataPoints.get(i))+" "); }
-             * System.out.println(); }
-             */
-            
-           System.out.print("Adaptive threshold "+adaptThreshold+"\n");
-           //this.txtLog.append("Adaptive threshold "+adaptThreshold+"\n");
+            System.out.print("Adaptive threshold "+adaptThreshold+"\n");
         
-           System.out.print("Done.\n " + secClusterMap.keySet().size() + " clusters found with " + ds.size() + " data points.\n");
-           //this.txtLog.append("Done.\n " + secClusterMap.keySet().size() + " clusters found with " + ds.size() + " data points.\n");
-
+            System.out.print("Done.\n " + secClusterMap.keySet().size() + " clusters found with " + ds.size() + " data points.\n");
+           
 
         } catch (java.io.IOException e) {
             System.out.print("Error Opening: " + this.file.getName() + ".\n");
-            //this.txtLog.append("Error Opening: " + this.file.getName() + ".\n");
             e.printStackTrace();
 
         } catch (java.lang.Exception e) {
              System.out.print("Exception occurred!\n");
-            //this.txtLog.append("Exception occurred!\n");
-            e.printStackTrace();
+             e.printStackTrace();
         }
         
         return 0;
@@ -417,3 +285,81 @@ public File escolherArquivo () {
             }
    }*/
 
+
+/*
+public Clustering (String SecLow1, String SecHigh1, 
+                                      String SecTau1, String SecH1,String SecNeighborhood1, 
+                                      String SecStep1,String SecThreshold1,String SecKernel1){
+        this.SecLow = SecLow1;
+        this.SecHigh = SecHigh1;
+        this.SecTau = SecTau1;
+        this.SecH = SecH1;                
+        this.SecNeighborhood = SecNeighborhood1;  
+        this.SecStep = SecStep1;  
+        this.SecThreshold = SecThreshold1;           
+        this.SecKernel = SecKernel1;
+    
+        }
+    
+    public Clustering (Parametros pm){
+        
+        this.SecKernel = pm.getParametros()[0];        
+        this.SecH = pm.getParametros()[1];
+        this.SecNeighborhood = pm.getParametros()[2]; 
+        this.SecStep = pm.getParametros()[3]; 
+        this.SecLow = pm.getParametros()[4];
+        this.SecHigh = pm.getParametros()[5];
+        this.SecTau = pm.getParametros()[6];
+        this.SecThreshold = pm.getParametros()[7];  
+    
+    }
+
+*/
+
+/*
+//System.out.println("CLUSTERING 2 >>> "+ a);
+            
+            //this.file = pm.getArqAgent(a);
+            
+            //this.file = pm.posicaoFile(parseInt(""+a.charAt(5))-1);  
+            //bem aqui foi resolvido o problema de distribuição do arquivo
+            
+            //this.file = pm.getPrimeiroFile();    //aqui ele tem que pegar é o arquivo do agente 
+*/
+
+/*
+/*this.SecLow = "0,0";
+        this.SecHigh = "1000000,1000000";
+        this.SecTau = "10000,10000";
+        this.SecH = "10000.0";                
+        this.SecNeighborhood = "3";  
+        this.SecStep = "1";  
+        this.SecThreshold = "2.0";           
+        this.SecKernel = "Gauss";*/
+/*
+if (this.file == null){
+                    System.out.println("CLUSTERING >>> ENCERRADO PORQUE O ARQUIVO É NULL");
+            }else{
+                    System.out.println("CLUSTERING >>> TEM ARQUIVO");
+            }
+*/
+
+/*
+public Clustering (String agente){
+        
+        this.SecKernel = pm.getParametros()[0];        
+        this.SecH = pm.getParametros()[1];
+        this.SecNeighborhood = pm.getParametros()[2]; 
+        this.SecStep = pm.getParametros()[3]; 
+        this.SecLow = pm.getParametros()[4];
+        this.SecHigh = pm.getParametros()[5];
+        this.SecTau = pm.getParametros()[6];
+        this.SecThreshold = pm.getParametros()[7];  
+        
+        System.out.print("CLUSTERING 1 >>> "+ agente);
+        
+        //realizaClustering(agente);
+        i++;
+    
+    }
+*/

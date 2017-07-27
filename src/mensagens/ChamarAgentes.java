@@ -124,9 +124,6 @@ class ProtocoloCfpChamarAgentes extends ContractNetInitiator{
                     
                     ACLMessage resposta = mensagem.createReply();
                     
-                    //***System.out.printf("Confirmado!!! O agente %s participará da mineração com agente %s\n", this.myAgent.getLocalName(), mensagem.getSender().getLocalName());
-                    
-                    //*************************** bem aqui tava dando erro: Já resolvido
                     aceite = resposta;
                     aceite.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
                     aceite.setContent("Confirmado");
@@ -157,3 +154,8 @@ class ProtocoloCfpChamarAgentes extends ContractNetInitiator{
         }
     
 }
+
+//***System.out.printf("Confirmado!!! O agente %s participará da mineração com agente %s\n", this.myAgent.getLocalName(), mensagem.getSender().getLocalName());
+                    
+                    //*************************** bem aqui tava dando erro: Já resolvido
+                    

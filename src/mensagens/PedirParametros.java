@@ -13,14 +13,8 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
-import jade.lang.acl.UnreadableException;
 import jade.proto.ProposeInitiator;
-import java.io.Serializable;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import mineracao.Parametros;
-//import protocolos.ProtocoloProposePedirParametros;
 
 /**
  *
@@ -93,24 +87,7 @@ class ProtocoloProposePedirParametros extends ProposeInitiator{
     @Override
     protected void handleAcceptProposal(ACLMessage aceitacao) {
         System.out.printf("%s: Negociação aceita.\n", this.myAgent.getLocalName());
-        System.out.printf("%s: **********pediu parâmetros para %s**********\n", this.myAgent.getLocalName(), aceitacao.getSender().getLocalName());
-        System.out.printf("%s: **********pediu parâmetros para %s**********\n", this.getAgent().getLocalName(), aceitacao.getSender().getLocalName());
-        
-        try {
-            
-            p = (Parametros) aceitacao.getContentObject();
-            //((MinerAgent) this.myAgent).setTemParametros(true);
-            ((MinerAgent)this.getAgent()).setTemParametros(true);
-            System.out.println(this.myAgent + "Pedir>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-                           + "TRUE se tem parametros e FALSE se não tem "+ ((MinerAgent)this.myAgent).isTemParametros());
-                
-            ((MinerAgent) this.myAgent).setP(p);
-            //p.imprimirParametros();
-            
-        } catch (UnreadableException ex) {
-            Logger.getLogger(ProtocoloProposePedirParametros.class.getName()).log(Level.SEVERE, null, ex);
-        }    
-        
+        System.out.printf("%s: **********pediu parâmetros para %s**********\n", this.myAgent.getLocalName(), aceitacao.getSender().getLocalName());       
     }
 
     //Lidar com a resposta em caso de rejeição: REJECT_PROPOSAL
@@ -129,6 +106,21 @@ class ProtocoloProposePedirParametros extends ProposeInitiator{
 }
 
 
-
 //dado[ 0 ] = new Dados ("word", 30,"texto");                    
                     //mensagem.setContentObject((Serializable) dado[0]);
+
+/*
+//System.out.printf("%s: **********pediu parâmetros para %s**********\n", this.getAgent().getLocalName(), aceitacao.getSender().getLocalName());
+
+*/
+
+/*p = (Parametros) aceitacao.getContentObject();
+            //((MinerAgent) this.myAgent).setTemParametros(true);
+            ((MinerAgent)this.getAgent()).setTemParametros(true);
+            System.out.println(this.myAgent + "Pedir>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+                           + "TRUE se tem parametros e FALSE se não tem "+ ((MinerAgent)this.myAgent).isTemParametros());
+                
+            ((MinerAgent) this.myAgent).setP(p);
+            p.imprimirParametros();
+
+*/

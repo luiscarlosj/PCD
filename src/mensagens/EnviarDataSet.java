@@ -7,7 +7,6 @@ package mensagens;
 
 import agentes.DataSetAgent;
 import jade.core.Agent;
-import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.SequentialBehaviour;
 import jade.domain.FIPAAgentManagement.FailureException;
 import jade.domain.FIPAAgentManagement.NotUnderstoodException;
@@ -59,17 +58,6 @@ class ProtocoloQueryEnviarDataSet extends AchieveREResponder {
             
             System.out.printf("Recebemos uma chamade de %s solicitando um DataSet.\n", request.getSender().getLocalName());
             
-            //File f = new File("C:\\Users\\LUIS\\Documents\\Algoritmos_Josenildo\\s1_part1.txt");
-            //File [] fs = {f};
-            //this.pm.setFile(fs);
-            
-            
-            //Verifica se a solicitação é; aceita ou recusa
-            //Aqui poderia verificar se o agente que solicita está realmente na arquitetura
-            //Melhorar 
-            //if (comprobarSolicitante(request.getSender().getLocalName())) {
-            
-            //if (((DataSetAgent) this.myAgent).isTemDataSet() == false) {            
             if (this.pm.quantFile() != 0) {
                 
                 System.out.println("Tenho dataset. Aguarde um momento...\n");
@@ -95,8 +83,6 @@ class ProtocoloQueryEnviarDataSet extends AchieveREResponder {
             try {
                 this.fileParaMiner= pm.posicaoFile(parseInt(""+(request.getSender().getLocalName()).charAt(5))-1);
                 
-                //File fileParaMiner = this.escolhaDoDataSet();
-                
                 inform.setContentObject(fileParaMiner);
                 
                 //AQUI SERVE PARA GUARDA A REFERENCIA DOS ARQUIVOS COM OS MINERAGENTS
@@ -109,7 +95,25 @@ class ProtocoloQueryEnviarDataSet extends AchieveREResponder {
             return inform;
         }
  
-        //método que faz a distribuição dos datasets
+        
+}
+
+
+//File f = new File("C:\\Users\\LUIS\\Documents\\Algoritmos_Josenildo\\s1_part1.txt");
+            //File [] fs = {f};
+            //this.pm.setFile(fs);
+            
+            
+            //Verifica se a solicitação é; aceita ou recusa
+            //Aqui poderia verificar se o agente que solicita está realmente na arquitetura
+            //Melhorar 
+            //if (comprobarSolicitante(request.getSender().getLocalName())) {
+            
+            //if (((DataSetAgent) this.myAgent).isTemDataSet() == false) { 
+
+/*
+//método que faz a distribuição dos datasets
+        //File fileParaMiner = this.escolhaDoDataSet();
         private File escolhaDoDataSet(){
             
             System.out.println("*************************************Quantidade de Arquivos: "+ pm.quantFile() + " valor da variável: "+ this.fileEscolhido);
@@ -134,4 +138,6 @@ class ProtocoloQueryEnviarDataSet extends AchieveREResponder {
             }
              
         }
-}
+
+
+*/

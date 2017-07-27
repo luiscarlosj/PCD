@@ -24,9 +24,6 @@ import mineracao.Clustering;
 import mineracao.Parametros;
 import mineracao.Resultado;
 import mineracao.SecCluster;
-//import protocolos.ProtocoloRequestEnviodeDados;
-
-
 /**
  *
  * @author LUIS
@@ -35,7 +32,7 @@ public class EnviodeDados extends SequentialBehaviour{
     
     Object [] args = null; 
     Clustering c;
-    File f;
+    File fileMiner;
     Parametros pm = Parametros.getInstance();
     Resultado  results = Resultado.getInstance();
     
@@ -76,24 +73,10 @@ public class EnviodeDados extends SequentialBehaviour{
                     
                 mensagem.setProtocol(FIPANames.InteractionProtocol.FIPA_REQUEST);
                 
-                //this.f = ((MinerAgent) this.myAgent).getMeuArquivo();
+                this.fileMiner = this.pm.getArqAgent(this.myAgent.getAID().getLocalName()); 
                 
-                this.f = this.pm.getArqAgent(this.myAgent.getAID().getLocalName()); 
-                
-                System.out.println("RECUPERANDO NOME DO ARQUIVO 2: \n" + this.f.getAbsolutePath());
-                
-                if (this.f == null){
-                    done();
-                    System.out.println("ENCERRADO PORQUE O ARQUIVO É NULL");
-                }
-                else
-                {
-                   System.out.println("NÃO FOI ENCERRADO PORQUE TEM ARQUIVO NÃO FOI ENCERRADO PORQUE TEM ARQUIVO");
-                }
-                
-                System.out.println("endereço do arquivo333: "+ ((MinerAgent) this.myAgent).getAID());
-                
-                Clustering c = new Clustering (f); 
+                //AQUI ACONTECE A INTEGRAÇÃO DA ARQUITETURA COM O ALGORITMO DE CLUSTERING KDECS                
+                Clustering c = new Clustering (fileMiner); 
                 
                 SecCluster sc = new SecCluster();
                 
@@ -105,32 +88,6 @@ public class EnviodeDados extends SequentialBehaviour{
                               Integer.toString(sc.getSecClusterMap().keySet().size())  + " clusters found with " 
                               + Integer.toString(sc.getPoints()) + " data points.\n");
                                 
-                /*c = new Clustering (this.myAgent.getLocalName()); 
-                
-                SecCluster sc = new SecCluster();
-                
-                sc.setSecClusterMap(c.getSecClusterMap());
-                
-                sc.setPoints(c.getDs().size());
-                
-                Resultado r = Resultado.getInstance();
-                
-                r.addResultAgent(myAgent.getAID().getLocalName(), 
-                              Integer.toString(sc.getSecClusterMap().keySet().size())  + " clusters found with " 
-                              + Integer.toString(sc.getPoints()) + " data points.\n");*/
-                
-                //System.out.print("Done.\n " + secClusterMap.keySet().size() + " clusters found with " + ds.size() + " data points.\n");
-           
-                //((MinerAgent) this.myAgent).setSecClusterMap(c.getSecClusterMap()); aqui
-                
-                //mensagem.setContentObject((Serializable) this.c);
-                //SecCluster sc = this.results.devolveSecClusterPorMiner(this.myAgent.getAID().getLocalName());
-                
-                if (sc == null)
-                    System.out.println("NULO NULO NULO NULO NULO NULO NULO NULO NULO NULO NULO NULO NULO NULO NULO");
-                else
-                    System.out.println("TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM");
-                
                 mensagem.setContentObject((Serializable) sc);
                 
                 //Indicamos o tempo que esperaremos pelas ofertas.
@@ -154,9 +111,6 @@ class ProtocoloRequestEnviodeDados extends AchieveREInitiator {
                 
                 public ProtocoloRequestEnviodeDados(Agent a, ACLMessage msg) {
                    super(a, msg);
-                   
-                   System.out.println(this.myAgent + "Envio>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-                           + "TRUE se tem parametros e FALSE se não tem "+ ((MinerAgent)this.myAgent).isTemParametros());
                 }
                 
                 @Override
@@ -209,3 +163,46 @@ System.out.println("Solicitando envio de clustering_parcial...");
         addSubBehaviour (new ProtocoloRequestEnviodeDados(myAgent, msg));
 
 */
+
+/*
+/*c = new Clustering (this.myAgent.getLocalName()); 
+                
+                SecCluster sc = new SecCluster();
+                
+                sc.setSecClusterMap(c.getSecClusterMap());
+                
+                sc.setPoints(c.getDs().size());
+                
+                Resultado r = Resultado.getInstance();
+                
+                r.addResultAgent(myAgent.getAID().getLocalName(), 
+                              Integer.toString(sc.getSecClusterMap().keySet().size())  + " clusters found with " 
+                              + Integer.toString(sc.getPoints()) + " data points.\n");*/
+                
+                //System.out.print("Done.\n " + secClusterMap.keySet().size() + " clusters found with " + ds.size() + " data points.\n");
+           
+                //((MinerAgent) this.myAgent).setSecClusterMap(c.getSecClusterMap()); aqui
+                
+                //mensagem.setContentObject((Serializable) this.c);
+                //SecCluster sc = this.results.devolveSecClusterPorMiner(this.myAgent.getAID().getLocalName());
+
+/*
+System.out.println("RECUPERANDO NOME DO ARQUIVO 2: \n" + this.fileMiner.getAbsolutePath());
+                
+                if (this.fileMiner == null){
+                    done();
+                    System.out.println("ENCERRADO PORQUE O ARQUIVO É NULL");
+                }
+                else
+                {
+                   System.out.println("NÃO FOI ENCERRADO PORQUE TEM ARQUIVO NÃO FOI ENCERRADO PORQUE TEM ARQUIVO");
+                }
+
+*/
+
+/*if (sc == null)
+                    System.out.println("NULO NULO NULO NULO NULO NULO NULO NULO NULO NULO NULO NULO NULO NULO NULO");
+                else
+                    System.out.println("TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM TEM");
+*/                
+                

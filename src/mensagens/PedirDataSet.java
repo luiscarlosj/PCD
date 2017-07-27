@@ -6,7 +6,6 @@
 package mensagens;
 
 import agentes.MinerAgent;
-import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.SequentialBehaviour;
 import jade.domain.DFService;
@@ -20,12 +19,8 @@ import java.io.File;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import mineracao.Clustering;
 import mineracao.Parametros;
 import mineracao.Resultado;
-import mineracao.SecCluster;
-//import protocolos.ProtocoloCfpChamarAgentes;
-//import protocolos.ProtocoloQueryPedirDataSet;
 
 /**
  *
@@ -73,7 +68,6 @@ public class PedirDataSet extends SequentialBehaviour{
                     }
                     
                     mensagem.setProtocol(FIPANames.InteractionProtocol.FIPA_QUERY);
-                    //mensagemCFP.setProtocol(FIPANames.InteractionProtocol.FIPA_PROPOSE);
                     mensagem.setContent("Tens DataSet da mineração?");
                     
                     //Indicamos o tempo que esperaremos pelas ofertas.
@@ -94,7 +88,7 @@ public class PedirDataSet extends SequentialBehaviour{
 class ProtocoloQueryPedirDataSet extends AchieveREInitiator {
     
         Parametros pm = Parametros.getInstance();
-         Resultado results = Resultado.getInstance();
+        Resultado results = Resultado.getInstance();
     
         public ProtocoloQueryPedirDataSet(Agent agente, ACLMessage mensagem) {
             super(agente, mensagem);
@@ -123,10 +117,9 @@ class ProtocoloQueryPedirDataSet extends AchieveREInitiator {
             try {
                 File f = (File) inform.getContentObject();  //***
                 
-                System.out.println("endereço do arquivo1: "+ f.getAbsolutePath()); //***
+                if(f != null)
+                System.out.println(this.myAgent.getLocalName()+" recebeu o arquivo: "+ f.getAbsolutePath()); //***
                 
-                System.out.println("RECUPERANDO NOME DO ARQUIVO 1: \n" 
-                        + (this.pm.getArqAgent(this.myAgent.getAID().getLocalName())).getAbsolutePath());
                                 
             } catch (UnreadableException ex) {
                 Logger.getLogger(ProtocoloQueryPedirDataSet.class.getName()).log(Level.SEVERE, null, ex);
@@ -153,4 +146,9 @@ class ProtocoloQueryPedirDataSet extends AchieveREInitiator {
         id.setLocalName("Data");
         mensagem.addReceiver(id);
 
+*/
+
+/*
+System.out.println("RECUPERANDO NOME DO ARQUIVO 1: \n" 
+                   + (this.pm.getArqAgent(this.myAgent.getAID().getLocalName())).getAbsolutePath());
 */
