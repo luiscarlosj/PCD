@@ -88,6 +88,9 @@ public final class Clustering implements Serializable{
             
             this.file = f;
             
+            if(f!=null)
+            {}
+            
             System.out.print("\nOpening file " + this.file.getAbsolutePath() + ".\n"); 
             ds = nds.load(true, this.file.getAbsolutePath());
             int dimension = ds.getDim();

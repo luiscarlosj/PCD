@@ -43,7 +43,7 @@ public class EnviarDataSet extends SequentialBehaviour{
 
 class ProtocoloQueryEnviarDataSet extends AchieveREResponder {
     
-        Parametros pm = Parametros.getInstance();     
+        Parametros param = Parametros.getInstance();     
         int fileEscolhido= -1; 
         File fileParaMiner = null;
         
@@ -58,7 +58,7 @@ class ProtocoloQueryEnviarDataSet extends AchieveREResponder {
             
             System.out.printf("Recebemos uma chamade de %s solicitando um DataSet.\n", request.getSender().getLocalName());
             
-            if (this.pm.quantFile() != 0) {
+            if (this.param.quantFile() != 0) {
                 
                 System.out.println("Tenho dataset. Aguarde um momento...\n");
                 ACLMessage agree = request.createReply();
@@ -81,12 +81,12 @@ class ProtocoloQueryEnviarDataSet extends AchieveREResponder {
             System.out.println("Enviando DataSet para " + request.getSender().getLocalName());
             
             try {
-                this.fileParaMiner= pm.posicaoFile(parseInt(""+(request.getSender().getLocalName()).charAt(5))-1);
+                this.fileParaMiner= param.posicaoFile(parseInt(""+(request.getSender().getLocalName()).charAt(5))-1);
                 
                 inform.setContentObject(fileParaMiner);
                 
                 //AQUI SERVE PARA GUARDA A REFERENCIA DOS ARQUIVOS COM OS MINERAGENTS
-                this.pm.setArq(request.getSender().getLocalName(), fileParaMiner);
+                this.param.setArq(request.getSender().getLocalName(), fileParaMiner);
                 
             } catch (IOException ex) {
                 Logger.getLogger(ProtocoloQueryEnviarDataSet.class.getName()).log(Level.SEVERE, null, ex);

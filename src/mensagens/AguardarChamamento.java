@@ -50,29 +50,20 @@ class ProtocoloCfpAguardarChamamento  extends ContractNetResponder {
     @Override
     protected ACLMessage prepareResponse(ACLMessage cfp) throws NotUnderstoodException, RefuseException {
         
-        //***System.out.printf("Agente %s: proposta recebida de %s.\n", this.myAgent.getLocalName(), cfp.getSender().getLocalName());
-
         //Verificamos se já participa da sessão de mineração
-        if (((MinerAgent) this.myAgent).isParticipaSessao() == false) {
-
-            //Fornecemos as informaões necessárias
-            ((MinerAgent) this.myAgent).setParticipaSessao(true);
-            
-            //***System.out.printf("Agente %s: confirmando proposta.\n", this.myAgent.getLocalName());
-
+        if (((MinerAgent) this.myAgent).isParticipaSessao() == true) {
+            ((MinerAgent) this.myAgent).setParticipaSessao(true); 
+             
             ACLMessage oferta = cfp.createReply();
             oferta.setPerformative(ACLMessage.PROPOSE);
             oferta.setContent("aceito participar da mineração");
             return oferta;
 
         } else {
-
             ACLMessage oferta = cfp.createReply();
             oferta.setPerformative(ACLMessage.REFUSE);
             oferta.setContent("Recusado");
             return oferta;
-            
-            //throw new RefuseException(" pois ja participar de sessão.");
         }
     }
 

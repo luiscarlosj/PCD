@@ -33,7 +33,7 @@ public class EnviodeDados extends SequentialBehaviour{
     Object [] args = null; 
     Clustering c;
     File fileMiner;
-    Parametros pm = Parametros.getInstance();
+    Parametros param = Parametros.getInstance();
     Resultado  results = Resultado.getInstance();
     
     public EnviodeDados(Agent a,  Object [] arg) {
@@ -73,7 +73,7 @@ public class EnviodeDados extends SequentialBehaviour{
                     
                 mensagem.setProtocol(FIPANames.InteractionProtocol.FIPA_REQUEST);
                 
-                this.fileMiner = this.pm.getArqAgent(this.myAgent.getAID().getLocalName()); 
+                this.fileMiner = this.param.getArqAgent(this.myAgent.getAID().getLocalName()); 
                 
                 //AQUI ACONTECE A INTEGRAÇÃO DA ARQUITETURA COM O ALGORITMO DE CLUSTERING KDECS                
                 Clustering c = new Clustering (fileMiner); 

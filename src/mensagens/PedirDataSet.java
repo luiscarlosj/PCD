@@ -87,8 +87,7 @@ public class PedirDataSet extends SequentialBehaviour{
 
 class ProtocoloQueryPedirDataSet extends AchieveREInitiator {
     
-        Parametros pm = Parametros.getInstance();
-        Resultado results = Resultado.getInstance();
+        
     
         public ProtocoloQueryPedirDataSet(Agent agente, ACLMessage mensagem) {
             super(agente, mensagem);
@@ -132,6 +131,10 @@ class ProtocoloQueryPedirDataSet extends AchieveREInitiator {
         }
     }
 
+/*
+Parametros param = Parametros.getInstance();
+        Resultado results = Resultado.getInstance();
+*/
 
 
 /*COMO ESTAVA PRIMEIRAMENTE

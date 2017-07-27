@@ -38,7 +38,7 @@ public class ConfirmarParametros extends SequentialBehaviour{
 
 class ProtocoloProposeConfirmarParametros extends ProposeResponder {
     
-        Parametros pm = Parametros.getInstance();        
+        Parametros param = Parametros.getInstance();        
  
         public ProtocoloProposeConfirmarParametros(Agent agente, MessageTemplate template) {
             super(agente, template);
@@ -50,13 +50,9 @@ class ProtocoloProposeConfirmarParametros extends ProposeResponder {
             
             System.out.printf("%s: proposição recebida de %s.\n", this.myAgent.getLocalName(), proposta.getSender().getLocalName());
              
-            if (this.pm != null) {
+            if (this.param.getParametros() != null) {
 
-                //Fornecemos as informaões necessárias
-                //Aceitação da proposta
-                System.out.printf("*********** %s: aceita proposta. Temos parâmetros para mineração.\n", this.myAgent.getLocalName());
-               
-                //Se cria a resposta da mensagem com a performativa ACCEPT_PROPOSAL, caso aceite  
+                System.out.printf("*********** %s: Temos parâmetros para mineração.\n", this.myAgent.getLocalName());               
                 ACLMessage agree = proposta.createReply();               
                 agree.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
                 
@@ -64,13 +60,9 @@ class ProtocoloProposeConfirmarParametros extends ProposeResponder {
                 
             } else {
  
-                //Rejeita a proposta
-                System.out.printf("%s: não tenho parâmetros.\n", this.myAgent.getLocalName());
- 
-                //Se cria a resposta da mensagem com a performativa REJECT_PROPOSAL, caso rejeite   
+                System.out.printf("%s: não tenho parâmetros.\n", this.myAgent.getLocalName()); 
                 ACLMessage refuse = proposta.createReply();
-                refuse.setPerformative(ACLMessage.REJECT_PROPOSAL);
- 
+                refuse.setPerformative(ACLMessage.REJECT_PROPOSAL); 
                 return refuse;
             }
         }

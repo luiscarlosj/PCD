@@ -28,7 +28,7 @@ public class MinerAgent extends Agent{
         }
         
         Object [ ] args;
-        private boolean participaSessao = false; //false se não participa da sessão de mineração        
+        private boolean participaSessao = true; //false se não participa da sessão de mineração        
         
         public void setParticipaSessao(boolean participaSessao) {
            this.participaSessao = participaSessao;
