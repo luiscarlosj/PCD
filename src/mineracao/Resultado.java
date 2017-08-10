@@ -28,13 +28,21 @@ public class Resultado {
 	}
         
         Map<String, String> results = new HashMap();
-        
-        public void addResultAgent(String nomeAgent, String resultado){
-              results.put(nomeAgent,resultado);
-        }
-        
-        public Map<String, String> imprimeResultados(){           
+
+        public Map<String, String> getResults() {
             return results;
+        }
+
+        public void setResults(Map<String, String> results) {
+           this.results = results;
+        }
+
+        public void addResultAgent(String nomeAgent, String resultado) {
+           results.put(nomeAgent, resultado);
+        }
+
+        public Map<String, String> imprimeResultados() {
+           return results;
         }
         
 }

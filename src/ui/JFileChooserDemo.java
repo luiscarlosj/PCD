@@ -674,7 +674,7 @@ public class JFileChooserDemo extends javax.swing.JFrame {
         }*/
         
         
-        this.textarea.append("\n\nGlobal Result >>  "+this.cg.getClusterGlobal().keySet().size() + " clusters found with"
+        this.textarea.append("\n\nGlobal Result  >>  "+this.cg.getClusterGlobal().keySet().size() + " clusters found with"
                 + " >> " + "  "+this.cg.getPoints() + " data points\n\n");
         
        
@@ -686,6 +686,13 @@ public class JFileChooserDemo extends javax.swing.JFrame {
 
     private void btnSecCluster1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSecCluster1ActionPerformed
         // TODO add your handling code here:
+        
+        this.cg.setContador(0);//Código para resetar os valores 
+        this.cg.setContador2(0);//this.cg.getClusterGlobal().clear();
+        //this.cg.getClusterLocal().clear();
+        this.cg.setPoints(0);
+        //this.rs = null;//this.rs.getResults().clear();
+                 
         int numMinerAgent = parseInt(this.txtMinerAgent.getText());
         int numDataAgent = parseInt(this.txtDataAgent.getText());
         int numManagerAgent = parseInt(this.txtManagerAgent.getText());
@@ -703,9 +710,6 @@ public class JFileChooserDemo extends javax.swing.JFrame {
             
         for (int i=0; i< numManagerAgent; i++)
             agentes = agentes + "Manager" + Integer.toString(i+1) + ":agentes.ManagerAgent(clusteringManager);";       
-        
-        for (int i=0; i< numHelperAgent; i++)
-            agentes = agentes + "Helper" + Integer.toString(i+1) + ":agentes.HelperAgent(clusteringHelper);";
         
         for (int i=0; i< numHelperAgent; i++)
             agentes = agentes + "Helper" + Integer.toString(i+1) + ":agentes.HelperAgent(clusteringHelper);";

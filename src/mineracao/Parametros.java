@@ -5,13 +5,11 @@
  */
 package mineracao;
 
-import jade.core.Agent;
+
 import jade.util.leap.Serializable;
 import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import model.clustering.DataPoint;
 
 /**
  *
@@ -31,16 +29,6 @@ public class Parametros implements Serializable {
 
 		return uniqueInstance;
 	}
-        
-        Map<Integer, java.util.List<DataPoint>> secClusterMap = null;        
-
-        public Map<Integer, List<DataPoint>> getSecClusterMap() {
-          return secClusterMap;
-        }
-
-        public void setSecClusterMap(Map<Integer, List<DataPoint>> secClusterMap) {
-           this.secClusterMap = secClusterMap;
-        }
         
         String [] param = new String [8];
         File [] file = null;          
@@ -92,7 +80,7 @@ public class Parametros implements Serializable {
             }
         }
          
-        Map<String, File> arq = new HashMap<String, File>();
+        Map<String, File> arq = new HashMap();
         
         public Map<String, File> getArq() {
           return arq;
@@ -108,3 +96,16 @@ public class Parametros implements Serializable {
         
 }
    
+
+/*
+Map<Integer, java.util.List<DataPoint>> secClusterMap = null;        
+
+        public Map<Integer, List<DataPoint>> getSecClusterMap() {
+          return secClusterMap;
+        }
+
+        public void setSecClusterMap(Map<Integer, List<DataPoint>> secClusterMap) {
+           this.secClusterMap = secClusterMap;
+        }
+
+*/

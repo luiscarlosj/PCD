@@ -17,7 +17,7 @@ import model.clustering.DataPoint;
 public class SecCluster implements Serializable{
     
     private Map<Integer, java.util.List<DataPoint>> secClusterMap = null;
-    private Integer points;
+    private Integer points = 0;
 
     public Integer getPoints() {
         return points;

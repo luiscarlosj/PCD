@@ -51,7 +51,7 @@ class ProtocoloCfpAguardarChamamento  extends ContractNetResponder {
     protected ACLMessage prepareResponse(ACLMessage cfp) throws NotUnderstoodException, RefuseException {
         
         //Verificamos se já participa da sessão de mineração
-        if (((MinerAgent) this.myAgent).isParticipaSessao() == true) {
+        if (((MinerAgent) this.myAgent).isParticipaSessao() == false) {
             ((MinerAgent) this.myAgent).setParticipaSessao(true); 
              
             ACLMessage oferta = cfp.createReply();
