@@ -76,7 +76,7 @@ public class EnviodeDados extends SequentialBehaviour{
                 this.fileMiner = this.param.getArqAgent(this.myAgent.getAID().getLocalName()); 
                 
                 //AQUI ACONTECE A INTEGRAÇÃO DA ARQUITETURA COM O ALGORITMO DE CLUSTERING KDECS                
-                Clustering c = new Clustering (fileMiner); 
+                Clustering c = new Clustering (this.fileMiner); 
                 
                 SecCluster sc = new SecCluster();
                 

@@ -103,6 +103,7 @@ public class JFileChooserDemo extends javax.swing.JFrame {
         menuItemViewData = new javax.swing.JMenuItem();
         menuResults = new javax.swing.JMenu();
         menuViewSecResults = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         fileChooser.setDialogTitle("Esta é minha caixa de diálogo aberta");
         fileChooser.setFileFilter(new MyCustomFilter());
@@ -473,6 +474,14 @@ public class JFileChooserDemo extends javax.swing.JFrame {
 
         menuView.add(menuResults);
 
+        jMenuItem3.setText("Arquivo por Agente");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        menuView.add(jMenuItem3);
+
         jMenuBar1.add(menuView);
 
         setJMenuBar(jMenuBar1);
@@ -756,6 +765,26 @@ public class JFileChooserDemo extends javax.swing.JFrame {
        this.textarea.setText("");        // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        Map<String, File> arquivoDoAgente = this.pm.getArq();
+        
+        Set<Map.Entry<String, File>> set = arquivoDoAgente.entrySet();               
+                
+	Iterator it = set.iterator();
+        
+        this.textarea.append("\n\n");
+		
+	while(it.hasNext()){
+                    
+            Map.Entry<String, File> entry = (Map.Entry)it.next();
+                        
+            //System.out.println(entry.getKey() + "\t\t"+entry.getValue());
+            this.textarea.append(entry.getKey() + "  >>" + "  "+entry.getValue().getAbsolutePath()+"\n");
+                        
+	} 
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -811,6 +840,7 @@ public class JFileChooserDemo extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblContainer;
     private javax.swing.JLabel lblDataAgent;

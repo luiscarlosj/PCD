@@ -17,7 +17,8 @@ import java.util.Map;
  */
 public class Parametros implements Serializable {
         
-        private static Parametros uniqueInstance;   
+        private static Parametros uniqueInstance;  
+        int fileEscolhido= -1; 
         
         private Parametros () {
 	 
@@ -92,7 +93,12 @@ public class Parametros implements Serializable {
         
         public File getArqAgent(String a){
            return arq.get(a);
-        }       
+        } 
+        
+        public File getArqAgent(){
+           this.fileEscolhido++;             
+           return this.posicaoFile(this.fileEscolhido);
+        } 
         
 }
    

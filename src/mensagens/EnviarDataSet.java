@@ -28,7 +28,7 @@ import mineracao.Parametros;
  * @author LUIS
  */
 public class EnviarDataSet extends SequentialBehaviour{
-
+    
     public EnviarDataSet(Agent a) {
         super(a);
     }
@@ -43,13 +43,10 @@ public class EnviarDataSet extends SequentialBehaviour{
 
 class ProtocoloQueryEnviarDataSet extends AchieveREResponder {
     
-        Parametros param = Parametros.getInstance();     
-        int fileEscolhido= -1; 
+        Parametros param = Parametros.getInstance();          
         File fileParaMiner = null;
         
-        
-    
-        public ProtocoloQueryEnviarDataSet(Agent agente, MessageTemplate template) {
+         public ProtocoloQueryEnviarDataSet(Agent agente, MessageTemplate template) {
             super(agente, template);
         }
  
@@ -81,12 +78,14 @@ class ProtocoloQueryEnviarDataSet extends AchieveREResponder {
             System.out.println("Enviando DataSet para " + request.getSender().getLocalName());
             
             try {
-                this.fileParaMiner= param.posicaoFile(parseInt(""+(request.getSender().getLocalName()).charAt(5))-1);
                 
-                inform.setContentObject(fileParaMiner);
+                //this.fileParaMiner= param.posicaoFile(parseInt(""+(request.getSender().getLocalName()).charAt(5))-1);
+                this.fileParaMiner= param.getArqAgent();
+                
+                inform.setContentObject(this.fileParaMiner);
                 
                 //AQUI SERVE PARA GUARDA A REFERENCIA DOS ARQUIVOS COM OS MINERAGENTS
-                this.param.setArq(request.getSender().getLocalName(), fileParaMiner);
+                this.param.setArq(request.getSender().getLocalName(), this.fileParaMiner);
                 
             } catch (IOException ex) {
                 Logger.getLogger(ProtocoloQueryEnviarDataSet.class.getName()).log(Level.SEVERE, null, ex);
