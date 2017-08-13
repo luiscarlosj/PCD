@@ -16,6 +16,8 @@ import model.clustering.DataPoint;
  * @author LUIS
  */
 public class ClusterGlobal implements Serializable {
+        
+        //classe criada responsável por formar e armazenar o clustering global; função do Agente Helper
     
         private ClusterGlobal () {
 	 

@@ -17,6 +17,8 @@ import java.util.Map;
  */
 public class Parametros implements Serializable {
         
+        //classe criada para gerenciar os parâmetros e os datasets utilizados pelos agentes
+    
         private static Parametros uniqueInstance;  
         int fileEscolhido= -1; 
         
@@ -31,8 +33,8 @@ public class Parametros implements Serializable {
 		return uniqueInstance;
 	}
         
-        String [] param = new String [8];
-        File [] file = null;          
+        String [] param = new String [8];  //guarda os parâmetros a serem utilizados pelo algoritmo KDEC-S
+        File [] file = null;               //guarda os datasets que serão utilizados pelos agentes
 
         public File[] getFile() {
            return file;
@@ -81,6 +83,7 @@ public class Parametros implements Serializable {
             }
         }
          
+        //Este Map guarda a referência dos arquivos por agentes 
         Map<String, File> arq = new HashMap();
         
         public Map<String, File> getArq() {

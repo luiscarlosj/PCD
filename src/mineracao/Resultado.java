@@ -14,6 +14,8 @@ import java.util.Map;
  */
 public class Resultado {
         
+        //clase criada para guardar os resultados do KEDC-S por agente
+    
         private static Resultado uniqueInstance;   
         
         private Resultado () {

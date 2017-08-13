@@ -16,6 +16,8 @@ import model.clustering.DataPoint;
  */
 public class SecCluster implements Serializable{
     
+    //classe que armazeno o resultado do clustering por agente
+    
     private Map<Integer, java.util.List<DataPoint>> secClusterMap = null;
     private Integer points = 0;
 
