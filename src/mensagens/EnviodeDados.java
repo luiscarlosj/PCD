@@ -76,13 +76,13 @@ public class EnviodeDados extends SequentialBehaviour{
                 this.fileMiner = this.param.getArqAgent(this.myAgent.getAID().getLocalName()); 
                 
                 //AQUI ACONTECE A INTEGRAÇÃO DA ARQUITETURA COM O ALGORITMO DE CLUSTERING KDECS                
-                Clustering c = new Clustering (this.fileMiner); 
+                this.c = new Clustering (this.fileMiner); 
                 
                 SecCluster sc = new SecCluster();
                 
-                sc.setSecClusterMap(c.getSecClusterMap());
+                sc.setSecClusterMap(this.c.getSecClusterMap());
                 
-                sc.setPoints(c.getDs().size());
+                sc.setPoints(this.c.getDs().size());
                 
                 this.results.addResultAgent(myAgent.getAID().getLocalName(), 
                               Integer.toString(sc.getSecClusterMap().keySet().size())  + " clusters found with " 
@@ -91,7 +91,7 @@ public class EnviodeDados extends SequentialBehaviour{
                 mensagem.setContentObject((Serializable) sc);
                 
                 //Indicamos o tempo que esperaremos pelas ofertas.
-                mensagem.setReplyByDate(new Date(System.currentTimeMillis() + 3000));
+                mensagem.setReplyByDate(new Date(System.currentTimeMillis() + 15000));
  
                 //Adicionamos o comportamento da consulta
                 addSubBehaviour (new ProtocoloRequestEnviodeDados( (MinerAgent) myAgent, mensagem));

@@ -79,8 +79,11 @@ class ProtocoloQueryEnviarDataSet extends AchieveREResponder {
             
             try {
                 
-                //this.fileParaMiner= param.posicaoFile(parseInt(""+(request.getSender().getLocalName()).charAt(5))-1);
-                this.fileParaMiner= param.getArqAgent();
+                //código para escolha de arquivo com até 9 agentes
+                this.fileParaMiner= param.posicaoFile(parseInt(""+(request.getSender().getLocalName()).charAt(5))-1);
+                
+                //código para escolha de arquivo com mais de 9 agentes
+                //this.fileParaMiner= param.getArqAgent();
                 
                 inform.setContentObject(this.fileParaMiner);
                 

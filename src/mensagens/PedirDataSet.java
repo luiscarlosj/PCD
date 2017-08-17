@@ -71,7 +71,7 @@ public class PedirDataSet extends SequentialBehaviour{
                     mensagem.setContent("Tens DataSet da mineração?");
                     
                     //Indicamos o tempo que esperaremos pelas ofertas.
-                    mensagem.setReplyByDate(new Date(System.currentTimeMillis() + 15000));
+                    //mensagem.setReplyByDate(new Date(System.currentTimeMillis() + 15000));
  
                     //Adicionamos o comportamento da consulta
                     addSubBehaviour(new ProtocoloQueryPedirDataSet((MinerAgent) this.myAgent, mensagem));

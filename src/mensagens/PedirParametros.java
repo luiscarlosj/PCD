@@ -77,8 +77,6 @@ public class PedirParametros extends SequentialBehaviour{
 
 class ProtocoloProposePedirParametros extends ProposeInitiator{
     
-    Parametros p;
-    
     public ProtocoloProposePedirParametros(Agent a, ACLMessage msg) {
         super(a, msg); 
     }

@@ -30,7 +30,7 @@ import util.kernels.Kernel;
  *
  * @author LUIS
  */
-public final class Clustering implements Serializable{
+public final class Clustering {
     
         Map<Integer, java.util.List<DataPoint>> secClusterMap = null; 
         Parametros pm = Parametros.getInstance();

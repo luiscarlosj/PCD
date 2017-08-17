@@ -20,8 +20,8 @@ public class Parametros implements Serializable {
         //classe criada para gerenciar os parâmetros e os datasets utilizados pelos agentes
     
         private static Parametros uniqueInstance;  
-        int fileEscolhido= -1; 
-        
+        int controleFile=-1; 
+
         private Parametros () {
 	 
         }
@@ -56,13 +56,21 @@ public class Parametros implements Serializable {
            return this.file[0];
         }
 
-         public String[] getParametros() {
-            return param;
-         }
+        public String[] getParametros() {
+           return param;
+        }
+        
+        public int getFileEscolhido() {
+            return this.controleFile;
+        }
+        
+        public void setFileEscolhido(int controleFile) {
+           this.controleFile = controleFile;
+        }
 
-         public void setParametros(String[] parametros) {
-            this.param = parametros;
-         }
+        public void setParametros(String[] parametros) {
+           this.param = parametros;
+        }
          
          public void imprimirParametros(String[] parametros) {
             
@@ -99,8 +107,10 @@ public class Parametros implements Serializable {
         } 
         
         public File getArqAgent(){
-           this.fileEscolhido++;             
-           return this.posicaoFile(this.fileEscolhido);
+            this.controleFile = this.getFileEscolhido()+1;
+            this.setFileEscolhido(this.controleFile);
+            System.out.println("VALOR DO ARQUIVO AQUI AQUI #####################################"+this.getFileEscolhido());
+            return this.posicaoFile(this.getFileEscolhido());
         } 
         
 }

@@ -598,6 +598,7 @@ public class JFileChooserDemo extends javax.swing.JFrame {
                     + "Threshold:+" + threshold + "\n");
             
             pm.setParametros(param);    
+            pm.setFileEscolhido(-1);
             
             cg.setPoints(0);
             

@@ -47,8 +47,7 @@ public class MinerAgent extends Agent{
         
         protected void teste(){
             
-            long tempInicial = System.currentTimeMillis();
-         
+            long tempInicial = System.currentTimeMillis();         
             args = getArguments (); 
             
 		FSMBehaviour compFSM = new FSMBehaviour ( this ) {
@@ -127,7 +126,6 @@ public class MinerAgent extends Agent{
 		} ,"D");
                 
                 
-                
                 compFSM.registerState(new OneShotBehaviour ( this ) {
 
 			int c=0;
@@ -140,11 +138,8 @@ public class MinerAgent extends Agent{
 
 			public int onEnd ( ) {
 				return ( c>0 ? 0 : 1 );
-                        }
-                        
-                        
-                        
-		} ,"E"); 
+                        }             
+                } ,"E"); 
                 
                 compFSM.registerLastState(new OneShotBehaviour ( this ) {
 
@@ -169,8 +164,8 @@ public class MinerAgent extends Agent{
 		compFSM.registerTransition( "A" , "B" , 0) ; //A --> B, caso onEnd() do A retorne 0
 		compFSM.registerTransition( "B" , "C" , 0) ; //B --> C, caso onEnd() do B retorne 1
                 compFSM.registerTransition( "C" , "D" , 0) ; //B --> C, caso onEnd() do B retorne 1
-                compFSM.registerTransition( "D" , "E" , 0) ;
-                compFSM.registerTransition( "E" , "F" , 0) ;                
+                compFSM.registerTransition( "D" , "E" , 0) ;  
+                compFSM.registerTransition( "E" , "F" , 0) ;
 		
 		compFSM.registerDefaultTransition( "B" , "C" , new String[] {"C","B"});
 
@@ -227,4 +222,9 @@ public class MinerAgent extends Agent{
 
 		// definimos uma transi��o padr�o ( n�o importa tipo de retorno)
 		//como a maquina � finita, temos que zerar os estados X e Z --> new String[] {"X" , "Z"} 
+*/
+
+/*
+
+
 */
