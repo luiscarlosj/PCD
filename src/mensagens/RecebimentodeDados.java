@@ -54,8 +54,8 @@ class ProtocoloRequestRecebimentoDados extends AchieveREResponder {
                 
                 private static final long serialVersionUID = 1L;            
     
-                ClusterGlobal cg = ClusterGlobal.getInstance();
-                SecCluster sc = new SecCluster();            
+                ClusterGlobal clusterGlobal = ClusterGlobal.getInstance();
+                SecCluster secCluster = new SecCluster();            
                 
                 public ProtocoloRequestRecebimentoDados ( Agent a , MessageTemplate mt) throws FIPAException {
 			super(a, mt) ;
@@ -70,16 +70,16 @@ class ProtocoloRequestRecebimentoDados extends AchieveREResponder {
                     if(request.getSender() != null) 
                     {
                         try { 
-                            this.sc = (SecCluster) request.getContentObject();
+                            this.secCluster = (SecCluster) request.getContentObject();
                         } catch (UnreadableException ex) {
                             Logger.getLogger(ProtocoloRequestRecebimentoDados.class.getName()).log(Level.SEVERE, null, ex);
                         }
                            
-                        if(this.sc.getSecClusterMap() != null)
+                        if(this.secCluster.getSecClusterMap() != null)
                         {
                             System.out.println( "Agent " + myAgent.getLocalName () + ": recebendo dados de "
                                     + request.getSender().getLocalName());
-                            this.cg.agrupaCluster(this.sc);                                
+                            this.clusterGlobal.agrupaCluster(this.secCluster);                                
                             ACLMessage agree = request.createReply () ;
                             agree.setPerformative (ACLMessage.AGREE) ;
                             return agree;
@@ -105,9 +105,8 @@ class ProtocoloRequestRecebimentoDados extends AchieveREResponder {
 		protected ACLMessage prepareResultNotification (ACLMessage request, ACLMessage response ) throws FailureException 
                 {
 		    //if (this.contador != 0) 
-                    if(this.sc.getSecClusterMap() != null)
+                    if(this.secCluster.getSecClusterMap() != null)
                     {
-                        
                        System.out.println(myAgent.getLocalName () + ":dados recebidos com sucesso.");                    
                        ACLMessage inform = request.createReply();
                        inform.setPerformative(ACLMessage.INFORM);

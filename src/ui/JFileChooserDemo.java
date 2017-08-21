@@ -9,10 +9,12 @@ package ui;
 import java.io.File;
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.JFileChooser;
+import javax.swing.JTextArea;
 import mineracao.ClusterGlobal;  
 import mineracao.Parametros;
 import mineracao.Resultado;
@@ -27,16 +29,28 @@ public class JFileChooserDemo extends javax.swing.JFrame {
     Resultado rs = Resultado.getInstance();
     java.io.File file = null;
     
+    int numMinerAgent = 0;    
+    int numDataAgent = 0;
+    int numManagerAgent = 0;
+    int numHelperAgent = 0;
+    
     /**
      * Creates new form JFileChooserDemo
      */
     public JFileChooserDemo() {
         initComponents();
-        
+    }
+    
+    public int getNumMinerAgent() {
+        return numMinerAgent;
+    }
+    
+    public void setNumMinerAgent(int numMinerAgent) {
+        this.numMinerAgent = numMinerAgent;
     }
     
     public void imprimeTextArea(String s){
-          this.textarea.append("");
+          this.textarea.append(s);
     }
     
     /**
@@ -515,11 +529,6 @@ public class JFileChooserDemo extends javax.swing.JFrame {
             
             File[] files = fileChooser.getSelectedFiles();
             
-            /*for (File fil : files)
-            {
-                textarea.append(fil.getAbsolutePath() +"\n");
-            }*/
-            
             for (int i=0; i < files.length; i++)
             {
                 textarea.append(files[i].getAbsolutePath() +"\n");
@@ -529,12 +538,6 @@ public class JFileChooserDemo extends javax.swing.JFrame {
             
             pm.setFile(files);
             
-            /*try {
-            // What to do with the file, e.g. display it in a TextArea
-            textarea.read( new FileReader( file.getAbsolutePath() ), null );
-            } catch (IOException ex) {
-            System.out.println("problem accessing file"+file.getAbsolutePath());
-            }*/
     } else {
         System.out.println("File access cancelled by user.");
     }
@@ -701,27 +704,27 @@ public class JFileChooserDemo extends javax.swing.JFrame {
         this.cg.setContador2(0);//this.cg.getClusterGlobal().clear();
         //this.cg.getClusterLocal().clear();
         this.cg.setPoints(0);
-        //this.rs = null;//this.rs.getResults().clear();
+        this.rs.setResults(new HashMap());
                  
-        int numMinerAgent = parseInt(this.txtMinerAgent.getText());
-        int numDataAgent = parseInt(this.txtDataAgent.getText());
-        int numManagerAgent = parseInt(this.txtManagerAgent.getText());
-        int numHelperAgent = parseInt(this.txtHelperAgent.getText());
+        this.numMinerAgent = parseInt(this.txtMinerAgent.getText());
+        this.numDataAgent = parseInt(this.txtDataAgent.getText());
+        this.numManagerAgent = parseInt(this.txtManagerAgent.getText());
+        this.numHelperAgent = parseInt(this.txtHelperAgent.getText());
         
         String container = this.txtContainer.getText();
         
         String agentes= "";
         
-        for (int i=0; i< numMinerAgent; i++)
+        for (int i=0; i< this.numMinerAgent; i++)
             agentes = agentes + "Miner" + Integer.toString(i+1) + ":agentes.MinerAgent(clusteringMiner);";
         
-        for (int i=0; i< numDataAgent; i++)
+        for (int i=0; i< this.numDataAgent; i++)
             agentes = agentes + "DataSet" + Integer.toString(i+1) + ":agentes.DataSetAgent(clusteringData);";
             
-        for (int i=0; i< numManagerAgent; i++)
+        for (int i=0; i< this.numManagerAgent; i++)
             agentes = agentes + "Manager" + Integer.toString(i+1) + ":agentes.ManagerAgent(clusteringManager);";       
         
-        for (int i=0; i< numHelperAgent; i++)
+        for (int i=0; i< this.numHelperAgent; i++)
             agentes = agentes + "Helper" + Integer.toString(i+1) + ":agentes.HelperAgent(clusteringHelper);";
         
         String[] parametros = {"-gui"};		
@@ -733,21 +736,25 @@ public class JFileChooserDemo extends javax.swing.JFrame {
         
         jade.Boot.main(novoContainer);
         
+        this.setNumMinerAgent(numMinerAgent);        
+        
         this.dlgExecutar.dispose();  
         
         this.textarea.append("");
         
         if (numMinerAgent !=0)
-            this.textarea.append("\nInstanciados " +numMinerAgent+" MinerAgent para esta sessão de mineração\n");  
+            this.textarea.append("\nInstanciado (s) " +this.getNumMinerAgent()+" MinerAgent para esta sessão de mineração\n");  
             
         if (numDataAgent !=0)
-            this.textarea.append("Instanciados " +numDataAgent+" DataAgent para esta sessão de mineração\n");  
+            this.textarea.append("Instanciado (s) " +numDataAgent+" DataAgent para esta sessão de mineração\n");  
             
         if (numManagerAgent !=0)
-            this.textarea.append("Instanciados " +numManagerAgent+" ManagerAgent para esta sessão de mineração\n");
+            this.textarea.append("Instanciado (s) " +numManagerAgent+" ManagerAgent para esta sessão de mineração\n");
             
         if (numHelperAgent !=0)
-            this.textarea.append("Instanciados " +numHelperAgent+" Helper Agent para esta sessão de mineração\n"); 
+            this.textarea.append("Instanciado (s) " +numHelperAgent+" Helper Agent para esta sessão de mineração\n");     
+        
+        
     }//GEN-LAST:event_btnSecCluster1ActionPerformed
 
     private void btnSecCancel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSecCancel1ActionPerformed
@@ -786,6 +793,8 @@ public class JFileChooserDemo extends javax.swing.JFrame {
 	} 
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -819,6 +828,10 @@ public class JFileChooserDemo extends javax.swing.JFrame {
                 new JFileChooserDemo().setVisible(true);
             }
         });
+        
+       
+        
+       
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

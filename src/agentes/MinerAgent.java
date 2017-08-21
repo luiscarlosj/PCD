@@ -14,6 +14,7 @@ import mensagens.ChamarAgentes;
 import mensagens.EnviodeDados;
 import mensagens.PedirDataSet;
 import mensagens.PedirParametros;
+import ui.JFileChooserDemo;
 
 /**
  *
@@ -149,8 +150,12 @@ public class MinerAgent extends Agent{
                             
 				long tempFinal = System.currentTimeMillis();
                                 long dif = (tempFinal - tempInicial);
-        
+                                
                                 System.out.printf("%s >>>> %02d segundos %02d milisegundos \n\n", this.myAgent.getLocalName(), dif/1000, dif%1000);
+                                
+                              
+                                
+                                 
 			}
 
 			public int onEnd ( ) {

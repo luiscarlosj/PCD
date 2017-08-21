@@ -16,10 +16,7 @@ import mineracao.Parametros;
  */
 public class DataSetAgent extends Agent{
     
-    Parametros pm = Parametros.getInstance();
-    
     // começa com false; assim que inicia o programa e ocorre a leitura do arquivo essa variável recebe true;
-
     @Override
         protected void setup () {
             
@@ -30,7 +27,5 @@ public class DataSetAgent extends Agent{
             //System.out.println("*********************FASE DO PEDIDO DO DATASET*********************\n\n\n");
             addBehaviour (new EnviarDataSet(this));
         
-        }
-        
-        //DESENVOLVER CÓDIGO PARA GERENCIAR OS DATASETS       
+        }      
 }

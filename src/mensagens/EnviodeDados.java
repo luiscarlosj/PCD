@@ -31,8 +31,9 @@ import mineracao.SecCluster;
 public class EnviodeDados extends SequentialBehaviour{
     
     Object [] args = null; 
-    Clustering c;
+    Clustering clustering;
     File fileMiner;
+    SecCluster secCluster;
     Parametros param = Parametros.getInstance();
     Resultado  results = Resultado.getInstance();
     
@@ -76,19 +77,19 @@ public class EnviodeDados extends SequentialBehaviour{
                 this.fileMiner = this.param.getArqAgent(this.myAgent.getAID().getLocalName()); 
                 
                 //AQUI ACONTECE A INTEGRAÇÃO DA ARQUITETURA COM O ALGORITMO DE CLUSTERING KDECS                
-                this.c = new Clustering (this.fileMiner); 
+                this.clustering = new Clustering (this.fileMiner); 
                 
-                SecCluster sc = new SecCluster();
+                this.secCluster = new SecCluster();
                 
-                sc.setSecClusterMap(this.c.getSecClusterMap());
+                secCluster.setSecClusterMap(this.clustering.getSecClusterMap());
                 
-                sc.setPoints(this.c.getDs().size());
+                secCluster.setPoints(this.clustering.getDs().size());
                 
                 this.results.addResultAgent(myAgent.getAID().getLocalName(), 
-                              Integer.toString(sc.getSecClusterMap().keySet().size())  + " clusters found with " 
-                              + Integer.toString(sc.getPoints()) + " data points.\n");
+                              Integer.toString(secCluster.getSecClusterMap().keySet().size())  + " clusters found with " 
+                              + Integer.toString(secCluster.getPoints()) + " data points.\n");
                                 
-                mensagem.setContentObject((Serializable) sc);
+                mensagem.setContentObject((Serializable) secCluster);
                 
                 //Indicamos o tempo que esperaremos pelas ofertas.
                 mensagem.setReplyByDate(new Date(System.currentTimeMillis() + 15000));

@@ -51,7 +51,7 @@ class ProtocoloProposeConfirmarParametros extends ProposeResponder {
             System.out.printf("%s: proposição recebida de %s.\n", this.myAgent.getLocalName(), proposta.getSender().getLocalName());
              
             if (this.param.getParametros() != null) {
-                
+                ((ManagerAgent) this.myAgent).setTemParametros(true); 
                 System.out.printf("*********** %s: Temos parâmetros para mineração.\n", this.myAgent.getLocalName());               
                 ACLMessage agree = proposta.createReply();               
                 agree.setPerformative(ACLMessage.ACCEPT_PROPOSAL);

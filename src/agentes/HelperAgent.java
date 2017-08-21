@@ -7,8 +7,6 @@ package agentes;
 
 import comportamentos.RegistroNaArquitetura;
 import jade.core.Agent;
-import jade.core.behaviours.FSMBehaviour;
-import jade.core.behaviours.OneShotBehaviour;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +19,7 @@ import model.clustering.DataPoint;
  */
 public class HelperAgent extends Agent{
     
-    Map<Integer, java.util.List<DataPoint>> clusterGlobal = new HashMap<Integer, java.util.List<DataPoint>>();
+    Map<Integer, java.util.List<DataPoint>> clusterGlobal = new HashMap();
     
     Object [ ] args;
 

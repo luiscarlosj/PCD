@@ -31,6 +31,7 @@ public class ClusterGlobal implements Serializable {
         private int contador = 0;
         private int contador2 = 0;
         private Integer points = 0;
+        private int totalAgentes= 0;
 
         public static synchronized ClusterGlobal getInstance() {
 		if (uniqueInstance == null)
@@ -81,10 +82,19 @@ public class ClusterGlobal implements Serializable {
               this.points = this.getPoints() + points;
         }
         
+        public int getTotalAgentes() {
+            return totalAgentes;
+        }
+
+        public void setTotalAgentes(int totalAgentes) {
+           this.totalAgentes = totalAgentes;
+        }
+        
         //método usado para agrupar
         public void agrupaCluster(SecCluster sc) 
         {
-            //this.contador++;
+            this.totalAgentes++; 
+            this.setTotalAgentes(this.totalAgentes);
             
             this.somaPoints(sc.getPoints());
             this.guardarClusterLocal(sc);

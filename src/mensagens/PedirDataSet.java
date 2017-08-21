@@ -87,11 +87,8 @@ public class PedirDataSet extends SequentialBehaviour{
 
 class ProtocoloQueryPedirDataSet extends AchieveREInitiator {
     
-        
-    
         public ProtocoloQueryPedirDataSet(Agent agente, ACLMessage mensagem) {
-            super(agente, mensagem);
-            
+            super(agente, mensagem);            
         }
 
         @Override
@@ -114,10 +111,10 @@ class ProtocoloQueryPedirDataSet extends AchieveREInitiator {
             System.out.printf("O agente %s envio o arquivo.\n", inform.getSender().getLocalName(), inform.getContent());
             
             try {
-                File f = (File) inform.getContentObject();  //***
+                File fileMiner = (File) inform.getContentObject();  //***
                 
-                if(f != null)
-                System.out.println(this.myAgent.getLocalName()+" recebeu o arquivo: "+ f.getAbsolutePath()); //***
+                if(fileMiner != null)
+                System.out.println(this.myAgent.getLocalName()+" recebeu o arquivo: "+ fileMiner.getAbsolutePath()); //***
                 
                                 
             } catch (UnreadableException ex) {
