@@ -53,17 +53,15 @@ public class LoadAgent extends TestCase {
     @Test
     public void testJade() {
 
-        int numMinerAgent = 3;
+        int numMinerAgent = 1;
         int numDataAgent = 1;
         int numManagerAgent = 1;
         int numHelperAgent = 1;
         pm.setFileEscolhido(-1);
 
-        String [] param = {"Gauss", "0.5", "1", "1", "0,0", "100,100", "1,1", "0.1"};
+        String[] param = {"Gauss", "10000.0", "3", "1", "0,0", "1000000,1000000", "10000,10000", "2.0"};      
 
-        File[] f = {new File("C:\\Users\\LUIS\\Documents\\Algoritmos_Josenildo\\spiral_part1.txt"),
-            new File("C:\\Users\\LUIS\\Documents\\Algoritmos_Josenildo\\spiral_part2.txt"),
-            new File("C:\\Users\\LUIS\\Documents\\Algoritmos_Josenildo\\spiral_part3.txt")};
+        File[] f = {new File("C:\\Users\\LUIS\\Documents\\Algoritmos_Josenildo\\s1_100k.txt")};
         
         pm.setParametros(param);
         pm.setFile(f);

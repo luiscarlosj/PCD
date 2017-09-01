@@ -16,10 +16,14 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.UnreadableException;
 import jade.proto.AchieveREInitiator;
 import java.io.File;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import mineracao.ClusterGlobal;
 import mineracao.Clustering;
 import mineracao.Parametros;
 import mineracao.Resultado;
@@ -110,6 +114,8 @@ class ProtocoloRequestEnviodeDados extends AchieveREInitiator {
 
 		private static final long serialVersionUID = 1L;
                 
+                ClusterGlobal cg = ClusterGlobal.getInstance();
+                
                 public ProtocoloRequestEnviodeDados(Agent a, ACLMessage msg) {
                    super(a, msg);
                 }
@@ -143,7 +149,15 @@ class ProtocoloRequestEnviodeDados extends AchieveREInitiator {
 
                 @Override
 		protected void handleInform (ACLMessage inform ) {
-			System.out.println("Agente " + inform.getSender().getLocalName() + " informa que recebeu arquivo com sucesso");
+		    
+                    System.out.println("Agente " + inform.getSender().getLocalName() + " informa que recebeu arquivo com sucesso");
+                    
+                    try {
+                        this.cg = (ClusterGlobal) inform.getContentObject();
+                    } catch (UnreadableException ex) {
+                        Logger.getLogger(ProtocoloRequestEnviodeDados.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                        
                 }
 	}
 

@@ -17,6 +17,7 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.lang.acl.UnreadableException;
 import jade.proto.AchieveREResponder;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mineracao.ClusterGlobal;
@@ -109,6 +110,13 @@ class ProtocoloRequestRecebimentoDados extends AchieveREResponder {
                     {
                        System.out.println(myAgent.getLocalName () + ":dados recebidos com sucesso.");                    
                        ACLMessage inform = request.createReply();
+                       
+                        try {
+                            inform.setContentObject(this.clusterGlobal);
+                        } catch (IOException ex) {
+                            Logger.getLogger(ProtocoloRequestRecebimentoDados.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                       
                        inform.setPerformative(ACLMessage.INFORM);
 
                        return inform; // envia mensagem INFORM

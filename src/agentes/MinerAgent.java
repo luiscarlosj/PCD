@@ -14,6 +14,7 @@ import mensagens.ChamarAgentes;
 import mensagens.EnviodeDados;
 import mensagens.PedirDataSet;
 import mensagens.PedirParametros;
+import mineracao.ClusterGlobal;
 import ui.JFileChooserDemo;
 
 /**
@@ -29,7 +30,16 @@ public class MinerAgent extends Agent{
         }
         
         Object [ ] args;
-        private boolean participaSessao = false; //false se não participa da sessão de mineração        
+        private boolean participaSessao = false; //false se não participa da sessão de mineração  
+        ClusterGlobal clusterGlobal = ClusterGlobal.getInstance();
+
+        public ClusterGlobal getClusterGlobal() {
+           return clusterGlobal;
+        }
+
+        public void setClusterGlobal(ClusterGlobal clusterGlobal) {
+           this.clusterGlobal = clusterGlobal;
+        }
         
         public void setParticipaSessao(boolean participaSessao) {
            this.participaSessao = participaSessao;
@@ -40,10 +50,8 @@ public class MinerAgent extends Agent{
         }
         
         @Override
-        protected void setup () {
-            
-            this.teste();            
-            
+        protected void setup () {            
+            this.teste();          
         }    
         
         protected void teste(){
@@ -147,8 +155,7 @@ public class MinerAgent extends Agent{
 			int c=0;
 
 			public void action() {
-                            
-				long tempFinal = System.currentTimeMillis();
+                                long tempFinal = System.currentTimeMillis();
                                 long dif = (tempFinal - tempInicial);
                                 
                                 System.out.printf("%s >>>> %02d segundos %02d milisegundos \n\n", this.myAgent.getLocalName(), dif/1000, dif%1000);
